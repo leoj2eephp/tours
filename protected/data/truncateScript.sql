@@ -1,0 +1,12 @@
+SET FOREIGN_KEY_CHECKS=0;
+truncate table cotizacion;
+truncate table pasajero;
+truncate table servicio;
+truncate table cotizante;
+truncate table cotizacion;
+truncate table extra_servicio;
+truncate table arrivo_cjc;
+truncate table salida_cjc;
+truncate table extra_arrivo;
+truncate table extra_salida;
+SET FOREIGN_KEY_CHECKS=1;
