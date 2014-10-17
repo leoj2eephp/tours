@@ -95,15 +95,15 @@ class CotizacionController extends Controller {
             $modelArrivoCjc->attributes = $_POST['ArrivoCjc'];
             $modelSalidaCjc->attributes = $_POST['SalidaCjc'];
             
-            //$modelArrivoCjc->save();
-            //$modelSalidaCjc->save();
+            $modelArrivoCjc->save();
+            $modelSalidaCjc->save();
             foreach ($_POST['Pasajero'] as $pasajero){
                 $modelPasajero = new Pasajero;
                 $modelPasajero->attributes = $pasajero;
                 $modelPasajero->cotizacion_id = $id;
                 $myDateTime = DateTime::createFromFormat('d/m/Y', $modelPasajero->fecha_nac);
                 $modelPasajero->fecha_nac = $myDateTime->format('Y-m-d');
-                //$modelPasajero->save();
+                $modelPasajero->save();
             }
             //$valid=$models[$j]->validate() && $valid;
         }
