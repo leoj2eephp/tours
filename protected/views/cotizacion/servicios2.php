@@ -66,12 +66,15 @@
             $("#lastRow").before(html);
             //$("#tablaServicios tr:last").after(html);
 
-            $(".datepicker").datepicker();
+            $(".datepicker").datepicker({
+                yearRange: '-0:+5',
+                minDate: '+0m +0d',
+            });
             $('.datetimepicker').datetimepicker({
                 timeOnly: true,
                 hourGrid: 0,
                 minuteGrid: 0,
-                timeFormat: 'hh:mm tt'
+                timeFormat: 'hh:mm tt',
             });
 
             $(".ajaxLugares").change(function(){
@@ -116,7 +119,7 @@
     ));
 ?>
 <table class="form cotizacion" id="tablaServicios">
-    <?php echo CHtml::errorSummary($model);?>
+    <?php echo $form->errorSummary($model); ?>
     <tr class="row cabecera">
         <td><?php echo CHtml::activeLabel($model,'fecha'); ?></td>
         <td><?php echo CHtml::activeLabel($model,'dia_semana'); ?></td>
@@ -139,7 +142,8 @@
                     'attribute'=>'[0]fecha',
                     'options' => array(
                         'firstDay'=>'1',
-                        //'localization'=>'es',
+                        'yearRange'=>'-0:+5',
+                        'minDate'=>'+0m +0d',
                     ),
                     'htmlOptions'=>array(
                         'id'=>'fecha',

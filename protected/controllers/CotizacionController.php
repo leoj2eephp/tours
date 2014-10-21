@@ -30,17 +30,24 @@ class CotizacionController extends Controller {
         $hotelesData = Hotel::getDataForDropDownList();
         if(isset($_POST['CotizacionForm'])) {
             $model->attributes = $_POST['CotizacionForm'];
-            $myDateTime1 = DateTime::createFromFormat('d/m/Y', $model->fecha);
-            $model->fecha = $myDateTime1->format('Y-m-d');
-            $myDateTime2 = DateTime::createFromFormat('d/m/Y', $model->fecha_inicio);
-            $model->fecha_inicio = $myDateTime2->format('Y-m-d');
-            $myDateTime3 = DateTime::createFromFormat('d/m/Y', $model->fecha_termino);
-            $model->fecha_termino = $myDateTime3->format('Y-m-d');
             $modelCotizante->attributes = $_POST['CotizacionForm'];
-            if($modelCotizante->save()){
-                $model->cotizante_id = $modelCotizante->id;
-                if($model->save())
-                    $this->redirect(array('servicios','id'=>$model->id));
+            if($model->validate() && $modelCotizante->validate()) {
+                $myDateTime1 = DateTime::createFromFormat('d/m/Y', $model->fecha);
+                $model->fecha = $myDateTime1->format('Y-m-d');
+                $myDateTime2 = DateTime::createFromFormat('d/m/Y', $model->fecha_inicio);
+                $model->fecha_inicio = $myDateTime2->format('Y-m-d');
+                $myDateTime3 = DateTime::createFromFormat('d/m/Y', $model->fecha_termino);
+                $model->fecha_termino = $myDateTime3->format('Y-m-d');
+                if($modelCotizante->save()){
+                    $model->cotizante_id = $modelCotizante->id;
+                    if($model->save()) {
+                        Yii::app()->user->setState('idCotizacion',$model->id);
+                        $this->redirect(array('servicios'));
+                    }
+                }
+            } else {
+                $cotizacionForm->addErrors($model->getErrors());
+                $cotizacionForm->addErrors($modelCotizante->getErrors());
             }
         }
         
@@ -51,31 +58,35 @@ class CotizacionController extends Controller {
             "paisesData"=>$paisesData));
     }
     
-    public function actionServicios($id) {
-        //$model=array();
-        // since you know how many models
+    public function actionServicios() {
+        $id = Yii::app()->user->getState('idCotizacion');
         $model = new Servicio;
         if(isset($_POST['Servicio'])) {
+            $valid = true;
             foreach ($_POST['Servicio'] as $j=>$postModel) {
                 if (isset($_POST['Servicio'][$j])) {
                     $servicioModel = new Servicio; // if you had static model only
                     $servicioModel->attributes=$postModel;
-                    $servicioModel->cotizacion_id = $id;
-                    $myDateTime = DateTime::createFromFormat('d/m/Y', $servicioModel->fecha);
-                    $servicioModel->fecha = $myDateTime->format('Y-m-d');
-                    if($servicioModel->save()) {
-                        foreach ($postModel['extras'] as $extra){
-                            $extrasModel = new ExtraServicio;
-                            $extrasModel->servicio_id = $servicioModel->id;
-                            $extrasModel->extra_id = $extra;
-                            $extrasModel->save();
+                    $valid=$servicioModel->validate() && $valid;
+                    if($valid) {
+                        $servicioModel->cotizacion_id = $id;
+                        $myDateTime = DateTime::createFromFormat('d/m/Y', $servicioModel->fecha);
+                        $servicioModel->fecha = $myDateTime->format('Y-m-d');
+                        if($servicioModel->save() && isset($postModel['extras'])) {
+                            foreach ($postModel['extras'] as $extra){
+                                $extrasModel = new ExtraServicio;
+                                $extrasModel->servicio_id = $servicioModel->id;
+                                $extrasModel->extra_id = $extra;
+                                $extrasModel->save();
+                            }
                         }
+                    } else {
+                        $model->addErrors($servicioModel->errors);
                     }
-                    //$valid=$models[$j]->validate() && $valid;
                 }
             }
-            Yii::app()->user->setState('idCotizacion',$id);
-            $this->redirect(array('confirmacion'));
+            if($valid)
+                $this->redirect(array('confirmacion'));
         }
         $modelCotizacion = Cotizacion::model()->findByPk($id);
         $tiposServicio = TipoServicio::getDataForDropDownList();

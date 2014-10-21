@@ -22,10 +22,12 @@ class CotizacionForm extends CFormModel {
      * Declares the validation rules.
      */
     public function rules() {
-            return array(
-                // name, email, subject and body are required
-                array('nombre, nombre_pasajero, pais, moneda_id, asunto_id, nombre, hotel_id, fecha_inicio, fecha_termino', 'required'),
-            );
+        return array(
+            // name, email, subject and body are required
+            array('nombre, nombre_pasajero, pais_id, moneda_id, asunto_id, hotel_id, fecha_inicio, fecha_termino', 'required'),
+            array('numero_pax', 'numerical', 'integerOnly'=>true),
+            array('numero_pax', 'length', 'max'=>2),
+        );
     }
     
     public function attributeLabels() {

@@ -125,10 +125,11 @@
                                     'attribute'=>'fecha',
                                     'options' => array(
                                         'firstDay'=>'1',
-                                        'dateFormat'=>'DD, d MM, yy'
+                                        'dateFormat'=>'DD, d MM, yy',
+                                        'yearRange'=>'-0:+5',
+                                        'minDate'=>'+0m +0d',
                                     ),
                                     'htmlOptions'=>array(
-                                        'id'=>'fechaArrivo',
                                         'style'=>'width: 245px;'
                                     ),
                                     'language'=>'es',
@@ -149,7 +150,6 @@
                                         'minuteGrid'=>0,
                                     ),
                                     'htmlOptions'=>array(
-                                        'id'=>'horaVueloArrivo',
                                         'style'=>'width: 59px;',
                                     )
                                 ));
@@ -171,7 +171,6 @@
                                         'minuteGrid'=>0,
                                     ),
                                     'htmlOptions'=>array(
-                                        'id'=>'horaPickupArrivo',
                                         'style'=>'width: 59px;',
                                     )
                                 ));
@@ -189,10 +188,11 @@
                                     'attribute'=>'fecha',
                                     'options' => array(
                                         'firstDay'=>'1',
-                                        'dateFormat'=>'DD, d MM, yy'
+                                        'dateFormat'=>'DD, d MM, yy',
+                                        'yearRange'=>'-0:+5',
+                                        'minDate'=>'+0m +0d',
                                     ),
                                     'htmlOptions'=>array(
-                                        'id'=>'fecha',
                                         'style'=>'width: 245px;'
                                     ),
                                     'language'=>'es',
@@ -260,10 +260,11 @@
                                     'attribute'=>'fecha',
                                     'options' => array(
                                         'firstDay'=>'1',
-                                        'dateFormat'=>'DD, d MM, yy'
+                                        'dateFormat'=>'DD, d MM, yy',
+                                        'yearRange'=>'-0:+5',
+                                        'minDate'=>'+0m +0d',
                                     ),
                                     'htmlOptions'=>array(
-                                        'id'=>'fechaSalida',
                                         'style'=>'width: 245px;'
                                     ),
                                     'language'=>'es',
@@ -284,7 +285,6 @@
                                         'minuteGrid'=>0,s
                                     ),
                                     'htmlOptions'=>array(
-                                        'id'=>'horaVueloSalida',
                                         'style'=>'width: 59px;',
                                     )
                                 ));
@@ -306,7 +306,6 @@
                                         'minuteGrid'=>0,
                                     ),
                                     'htmlOptions'=>array(
-                                        'id'=>'horaPickupSalida',
                                         'style'=>'width: 59px;',
                                     )
                                 ));
@@ -323,7 +322,9 @@
                                     'attribute'=>'fecha',
                                     'options' => array(
                                         'firstDay'=>'1',
-                                        'dateFormat'=>'DD, d MM, yy'
+                                        'dateFormat'=>'DD, d MM, yy',
+                                        'yearRange'=>'-0:+5',
+                                        'minDate'=>'+0m +0d',
                                     ),
                                     'htmlOptions'=>array(
                                         'style'=>'width: 245px;'
@@ -402,7 +403,11 @@
                                         'attribute'=>'['.$i.']fecha_nac',
                                         'options' => array(
                                             'firstDay'=>'1',
-                                            'dateFormat'=>'d/m/y'
+                                            'dateFormat'=>'d/m/y',
+                                            'yearRange'=>'-99:+0',
+                                            'maxDate'=>'+0m +0d',
+                                            'changeYear'=>true,
+                                            'changeMonth'=>true,
                                         ),
                                         'htmlOptions'=>array(
                                             'style'=>'width: 75px;',
@@ -428,7 +433,10 @@
                                     'attribute'=>'[0]fecha_nac',
                                     'options' => array(
                                         'firstDay'=>'1',
-                                        //'dateFormat'=>'DD, d MM, yy'
+                                        'yearRange'=>'-99:+0',
+                                        'maxDate'=>'+0m +0d',
+                                        'changeYear'=>true,
+                                        'changeMonth'=>true,
                                     ),
                                     'htmlOptions'=>array(
                                         'style'=>'width: 75px;',
@@ -466,9 +474,11 @@
                     <td><?php echo CHtml::activeLabel($model,'servicios.valor'); ?></td>
                 </tr>
                 <?php foreach($model['servicios'] as $servicios) {
-                    $extrasString;
-                    foreach ($servicios['extras'] as $extras) {
-                        $extrasString[] = $extras->nombre;
+                    $extrasString = array();
+                    if(isset($servicios['extras'])) {
+                        foreach ($servicios['extras'] as $extras) {
+                            $extrasString[] = $extras->nombre;
+                        }
                     }
                     $servicios->fecha = date('d-M-y', strtotime($servicios->fecha));
                     $servicios->hora = date('h:i', strtotime($servicios->hora)); ?>

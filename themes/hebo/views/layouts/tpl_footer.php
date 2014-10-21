@@ -32,6 +32,7 @@
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/js/bootstrap-collapse.js"></script>
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/js/bootstrap-carousel.js"></script>
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/js/bootstrap-typeahead.js"></script>
+    <script src="<?php echo Yii::app()->theme->baseUrl;?>/js/jsHelper.js"></script>
     <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script> -->
     
   </body>

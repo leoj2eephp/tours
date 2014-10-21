@@ -38,7 +38,7 @@ class Servicio extends CActiveRecord {
             // NOTE: you should only define rules for those attributes that
             // will receive user inputs.
             return array(
-                array('cotizacion_id, fecha, n_personas, tipo_servicio_id, lugar_id, idioma_guia_id, valor', 'required'),
+                array('fecha, n_personas, tipo_servicio_id, lugar_id, idioma_guia_id, valor', 'required'),
                 array('cotizacion_id, n_personas, tipo_servicio_id, lugar_id, entrada, idioma_guia_id', 'numerical', 'integerOnly'=>true),
                 array('valor', 'numerical'),
                 array('dia_semana', 'length', 'max'=>2),

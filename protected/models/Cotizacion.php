@@ -40,7 +40,7 @@ class Cotizacion extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('cotizante_id, moneda_id, asunto_id, fecha, nombre_pasajero, numero_pax, hotel_id, fecha_inicio, fecha_termino', 'required'),
+            array('moneda_id, asunto_id, fecha, nombre_pasajero, numero_pax, hotel_id, fecha_inicio, fecha_termino', 'required'),
             array('cotizante_id, moneda_id, asunto_id, numero_pax, hotel_id', 'numerical', 'integerOnly'=>true),
             array('nombre_pasajero', 'length', 'max'=>200),
             // The following rule is used by search().

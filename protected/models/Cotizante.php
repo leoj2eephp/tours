@@ -17,26 +17,24 @@ class Cotizante extends CActiveRecord {
     /**
      * @return string the associated database table name
      */
-    public function tableName()
-    {
-            return 'cotizante';
+    public function tableName() {
+        return 'cotizante';
     }
 
     /**
      * @return array validation rules for model attributes.
      */
-    public function rules()
-    {
-            // NOTE: you should only define rules for those attributes that
-            // will receive user inputs.
-            return array(
-                    array('nombre, pais_id', 'required'),
-                    array('pais_id', 'numerical', 'integerOnly'=>true),
-                    array('nombre', 'length', 'max'=>200),
-                    // The following rule is used by search().
-                    // @todo Please remove those attributes that should not be searched.
-                    array('id, nombre, pais_id', 'safe', 'on'=>'search'),
-            );
+    public function rules() {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            //array('nombre, pais_id', 'required'),
+            array('pais_id', 'numerical', 'integerOnly'=>true),
+            array('nombre', 'length', 'max'=>200),
+            // The following rule is used by search().
+            // @todo Please remove those attributes that should not be searched.
+            array('id, nombre, pais_id', 'safe', 'on'=>'search'),
+        );
     }
 
     /**
@@ -55,13 +53,12 @@ class Cotizante extends CActiveRecord {
     /**
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels()
-    {
-            return array(
-                    'id' => 'ID',
-                    'nombre' => 'Nombre Cotizante',
-                    'pais_id' => 'Pais',
-            );
+    public function attributeLabels() {
+        return array(
+            'id' => 'ID',
+            'nombre' => 'Nombre Cotizante',
+            'pais_id' => 'Pais',
+        );
     }
 
     /**
