@@ -40,6 +40,8 @@
                                     array('label'=>'Extra', 'url'=>array('/extra/admin')),
                                     array('label'=>'Línea Aérea', 'url'=>array('/lineaAerea/admin')),
                                     array('label'=>'Detalle Servicio', 'url'=>array('/detalleServicio/admin')),
+                                    array('label'=>'Tipo Excursión', 'url'=>array('/tipoExcursion/admin')),
+                                    array('label'=>'Excursión', 'url'=>array('/excursion/admin')),
                                 )),
                         array('label'=>'Cotizar', 'url'=>array('/cotizacion/create'),
                             'visible'=>Yii::app()->user->isGuest),

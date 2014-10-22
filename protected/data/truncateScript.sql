@@ -9,4 +9,7 @@ truncate table arrivo_cjc;
 truncate table salida_cjc;
 truncate table extra_arrivo;
 truncate table extra_salida;
+truncate table excursion;
+truncate table imagen;
+truncate table imagen_excursion;
 SET FOREIGN_KEY_CHECKS=1;

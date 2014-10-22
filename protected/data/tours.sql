@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 17-10-2014 a las 02:49:56
+-- Tiempo de generación: 22-10-2014 a las 07:11:32
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.11
 
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `excursion` (
   `nombre` varchar(100) NOT NULL,
   `descripcion` text NOT NULL,
   `tipo_excursion_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -214,6 +214,28 @@ CREATE TABLE IF NOT EXISTS `idioma` (
 INSERT INTO `idioma` (`id`, `nombre`) VALUES
 (1, 'Español'),
 (2, 'Inglés');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `imagen`
+--
+
+CREATE TABLE IF NOT EXISTS `imagen` (
+`id` int(11) NOT NULL,
+  `ruta_imagen` varchar(200) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `imagen_excursion`
+--
+
+CREATE TABLE IF NOT EXISTS `imagen_excursion` (
+  `imagen_id` int(11) NOT NULL,
+  `excursion_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -360,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `sigue_a` (
 `id` int(11) NOT NULL,
   `seguida_por_id` int(11) NOT NULL,
   `sigue_a_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -371,7 +393,16 @@ CREATE TABLE IF NOT EXISTS `sigue_a` (
 CREATE TABLE IF NOT EXISTS `tipo_excursion` (
 `id` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `tipo_excursion`
+--
+
+INSERT INTO `tipo_excursion` (`id`, `nombre`) VALUES
+(1, 'HALF DAY'),
+(2, 'FULL DAY'),
+(3, 'FULL DAY EXTRA');
 
 -- --------------------------------------------------------
 
@@ -503,6 +534,18 @@ ALTER TABLE `idioma`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `imagen`
+--
+ALTER TABLE `imagen`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `imagen_excursion`
+--
+ALTER TABLE `imagen_excursion`
+ ADD KEY `fk_imagen_has_excursion_excursion1` (`excursion_id`), ADD KEY `fk_imagen_has_excursion_imagen1` (`imagen_id`);
+
+--
 -- Indices de la tabla `linea_aerea`
 --
 ALTER TABLE `linea_aerea`
@@ -607,7 +650,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT de la tabla `excursion`
 --
 ALTER TABLE `excursion`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `extra`
 --
@@ -623,6 +666,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 ALTER TABLE `idioma`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `imagen`
+--
+ALTER TABLE `imagen`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `linea_aerea`
 --
@@ -662,12 +710,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `sigue_a`
 --
 ALTER TABLE `sigue_a`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `tipo_excursion`
 --
 ALTER TABLE `tipo_excursion`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `tipo_servicio`
 --
@@ -738,6 +786,13 @@ ADD CONSTRAINT `fk_extra_has_salida_cjc_salida_cjc1` FOREIGN KEY (`salida_cjc_id
 ALTER TABLE `extra_servicio`
 ADD CONSTRAINT `fk_servicio_has_extra_extra1` FOREIGN KEY (`extra_id`) REFERENCES `extra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 ADD CONSTRAINT `fk_servicio_has_extra_servicio1` FOREIGN KEY (`servicio_id`) REFERENCES `servicio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `imagen_excursion`
+--
+ALTER TABLE `imagen_excursion`
+ADD CONSTRAINT `fk_imagen_has_excursion_excursion1` FOREIGN KEY (`excursion_id`) REFERENCES `excursion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_imagen_has_excursion_imagen1` FOREIGN KEY (`imagen_id`) REFERENCES `imagen` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `lugar`
