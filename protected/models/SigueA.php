@@ -39,7 +39,7 @@ class SigueA extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'excursion' => array(self::BELONGS_TO, 'Excursion', 'seguida_por_id'),
-            //'excursion2' => array(self::HAS_ONE, 'Excursion', 'seguida_por_id'),
+            'excursion2' => array(self::HAS_ONE, 'Excursion', 'sigue_a_id'),
         );
     }
 

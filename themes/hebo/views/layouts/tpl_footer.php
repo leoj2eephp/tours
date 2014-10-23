@@ -11,7 +11,7 @@
 <footer>
     <div class="footer">
         <div class="container">
-        	Copyright &copy; 2012. Designed by webapplicationthemes.com - High quality HTML Theme
+            kagfhasdhfgshgfk
         </div>
 	</div>
 </footer>
