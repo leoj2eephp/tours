@@ -61,32 +61,32 @@ class ExcursionController extends Controller {
             if(isset($_FILES)) {
                 $model->attributes = $_POST['Excursion'];
                 if($model->save()) {
-                    if(isset($_POST['Excursion']['sigueA'])){
+                    /*if(isset($_POST['Excursion']['sigueA'])){
                         foreach($_POST['Excursion']['sigueA'] as $sigueA) {
                             $modelSigueA = new SigueA;
                             $modelSigueA->sigue_a_id = $sigueA;
                             $modelSigueA->seguida_por_id = $model->id;
                             $modelSigueA->insert();
-                        }
-                        foreach($_FILES['Excursion']['name']['image'] as $index => $valor) {
-                            if($_FILES['Excursion']['error']['image'][$index] == 0) {
-                                $modelImage = new Imagen;
-                                $randomHash = bin2hex(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
-                                $modelImage->ruta_imagen = Yii::app()->getBaseUrl().'/images/added/'.$randomHash;
-                                if($modelImage->save()) {
-                                    $uploadedFile = CUploadedFile::getInstance($model, 'image['.$index.']');
-                                    $uploadedFile->saveAs(Yii::getPathOfAlias('webroot').'/images/added/'.$randomHash);
+                        }*/
+                    foreach($_FILES['Excursion']['name']['image'] as $index => $valor) {
+                        if($_FILES['Excursion']['error']['image'][$index] == 0) {
+                            $modelImage = new Imagen;
+                            $randomHash = bin2hex(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+                            $modelImage->ruta_imagen = Yii::app()->getBaseUrl().'/images/added/'.$randomHash;
+                            if($modelImage->save()) {
+                                $uploadedFile = CUploadedFile::getInstance($model, 'image['.$index.']');
+                                $uploadedFile->saveAs(Yii::getPathOfAlias('webroot').'/images/added/'.$randomHash);
 
-                                    $modelImageExcursion = new ImagenExcursion;
-                                    $modelImageExcursion->excursion_id = $model->id;
-                                    $modelImageExcursion->imagen_id = $modelImage->id;
-                                    if(!$modelImageExcursion->save())
-                                        $success = false;
-                                } else
+                                $modelImageExcursion = new ImagenExcursion;
+                                $modelImageExcursion->excursion_id = $model->id;
+                                $modelImageExcursion->imagen_id = $modelImage->id;
+                                if(!$modelImageExcursion->save())
                                     $success = false;
-                            }
+                            } else
+                                $success = false;
                         }
                     }
+                    //}
                 } else
                     $success = false;
             }
@@ -127,32 +127,32 @@ class ExcursionController extends Controller {
                 }
                 $this->cleanImagesData($model, implode(',', $aux));
                 if($model->save()) {
-                    if(isset($_POST['Excursion']['sigueA'])){
+                    /*if(isset($_POST['Excursion']['sigueA'])){
                         foreach($_POST['Excursion']['sigueA'] as $sigueA) {
                             $modelSigueA = new SigueA;
                             $modelSigueA->sigue_a_id = $sigueA;
                             $modelSigueA->seguida_por_id = $model->id;
                             $modelSigueA->insert();
-                        }
-                        foreach($_FILES['Excursion']['name']['image'] as $index => $valor) {
-                            if($_FILES['Excursion']['error']['image'][$index] == 0) {
-                                $modelImage = new Imagen;
-                                $randomHash = bin2hex(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
-                                $modelImage->ruta_imagen = Yii::app()->getBaseUrl().'/images/added/'.$randomHash;
-                                if($modelImage->save()) {
-                                    $uploadedFile = CUploadedFile::getInstance($model, 'image['.$index.']');
-                                    $uploadedFile->saveAs(Yii::getPathOfAlias('webroot').'/images/added/'.$randomHash);
+                        }*/
+                    foreach($_FILES['Excursion']['name']['image'] as $index => $valor) {
+                        if($_FILES['Excursion']['error']['image'][$index] == 0) {
+                            $modelImage = new Imagen;
+                            $randomHash = bin2hex(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+                            $modelImage->ruta_imagen = Yii::app()->getBaseUrl().'/images/added/'.$randomHash;
+                            if($modelImage->save()) {
+                                $uploadedFile = CUploadedFile::getInstance($model, 'image['.$index.']');
+                                $uploadedFile->saveAs(Yii::getPathOfAlias('webroot').'/images/added/'.$randomHash);
 
-                                    $modelImageExcursion = new ImagenExcursion;
-                                    $modelImageExcursion->excursion_id = $model->id;
-                                    $modelImageExcursion->imagen_id = $modelImage->id;
-                                    if(!$modelImageExcursion->save())
-                                        $success = false;
-                                } else
+                                $modelImageExcursion = new ImagenExcursion;
+                                $modelImageExcursion->excursion_id = $model->id;
+                                $modelImageExcursion->imagen_id = $modelImage->id;
+                                if(!$modelImageExcursion->save())
                                     $success = false;
-                            }
+                            } else
+                                $success = false;
                         }
                     }
+                    //}
                 } else
                     $success = false;
             }
@@ -222,7 +222,8 @@ class ExcursionController extends Controller {
      * @throws CHttpException
      */
     public function loadModel($id) {
-        $model=Excursion::model()->with('imagenes','sigueA')->findByPk($id);
+        //$model=Excursion::model()->with('imagenes','sigueA')->findByPk($id);
+        $model=Excursion::model()->with('imagenes')->findByPk($id);
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');
         return $model;

@@ -35,22 +35,17 @@ class HomeController extends Controller {
     
     public function actionFullDay() {
         try {
-            $criteria = new CDbCriteria;
-            $criteria->select = 't.id, t.nombre, ex.nombre as joinSeguidaPor, ex2.nombre as joinSigueA, sp.id as idSeguidas';
-            $criteria->join = 'left join sigue_a as sa on t.id = sa.sigue_a_id ';
-            $criteria->join .= 'left join sigue_a as sp on t.id = sp.seguida_por_id ';
-            $criteria->join .= 'left join excursion as ex on ex.id = sa.seguida_por_id ';
-            $criteria->join .= 'left join excursion as ex2 on ex2.id = sp.sigue_a_id ';
-            $criteria->group = 't.id, ex2.nombre';
-            $criteria->condition = 't.tipo_excursion_id = 2';
-            $model = Excursion::model()->findAll($criteria);
+            $model = Tour::model()->findAll(array('condition'=>'primera=1'));
+            $tours = array();
+            foreach($model as $t) {
+                $tours[] = Yii::app()->db->createCommand('CALL getFullTour2('.$t['id'].')')->queryAll();
+            }
         } catch (Exception $ex) {
             echo '<pre>';
             print_r($ex);
             echo '</pre>';
         }
-        //$model = Excursion::model()->with('sigueA', 'seguidaPor')->findAll('tipo_excursion_id = 2');
-        $this->renderPartial("fullDay", array("model"=>$model));
+        $this->renderPartial("fullDay", array("tours"=>$tours));
     }
     
     public function actionFullDayExtra() {
@@ -59,15 +54,20 @@ class HomeController extends Controller {
     }
  
     public function actionShowExcursion($id) {
-        $tipoDato = substr($id, 0, 1);
-        $model = null;
-        if($tipoDato == 'e') {
-            $pk = substr($id, 1);
-            $model = Excursion::model()->findByPk($pk);
-        } else if($tipoDato == 's') {
-            $pk = substr($id, 1);
-            $model = SigueA::model()->with('excursion')->findAllByPk($pk);
+        $tours = Yii::app()->db->createCommand('CALL getFullTour2('.$id.')')->queryAll();
+        $fullNameTour = Tour::getFullName($id);
+        $aux = array();
+        foreach ($tours as $tour) {
+            $exIds[] = $tour["excursion_id"];
         }
-        $this->renderPartial("excursiones",array("model"=>$model));
+        try {
+            $excursiones = Excursion::model()->with("imagenes")->findAll('t.id IN ('.implode(',',$exIds).')');
+        } catch (Exception $ex) {
+            echo '<pre>';
+            print_r($ex);
+            echo '</pre>';
+        }
+        //$excursiones = Excursion::model()->findAll('id IN (:exIds)', array(":exIds"=>implode(',',$exIds)));
+        $this->renderPartial("excursiones",array("excursiones"=>$excursiones,"fullNameTour"=>$fullNameTour));
     }
 }

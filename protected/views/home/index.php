@@ -1,7 +1,7 @@
 <head>
     <style>
-        body { font: normal normal normal 12px/1.4em 'open sans', sans-serif; }
-        .nivoSlider { height: 150px; width: 99%; }
+        body { font: normal normal normal 13px/1.4em 'open sans', sans-serif; }
+        .titleSizeFont { font-size: 14px; }
         /*.slider-bootstrap::after{
             content: 'asdfasdfads';
             position: absolute;
@@ -117,6 +117,10 @@
             display:block;
         }
         
+        /* Full tours sub-menus */
+        .rightTourMenu { width: 308px; text-align: right; background-color: rgba(171, 171, 171, 0.219608); border-radius: 5px; height: 34px; }
+        .backColorSubMenus { background-color: rgba(171, 171, 171, 0.219608); border-radius: 5px; height: 34px; }
+        .spanDiv { margin-right: 10px; position: relative; top: 5px; padding-left: 10px; padding-right: 10px; }
     </style>
     
     <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/js/nivo-slider/jquery.nivo.slider.pack.js"></script>
@@ -151,7 +155,7 @@
     
     <div class="slider-bootstrap"><!-- start slider -->
     	<div class="slider-wrapper theme-default" style="padding-left: 11px;" >
-            <div id="slider-nivo" class="nivoSlider">
+            <div id="slider-nivo" class="nivoSlider" style="height: 150px; width: 99%;">
                 <img src="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/flickr/s10.jpg" data-thumb="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/flickr/s10.jpg" alt="" title="" />
                 <img src="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/flickr/s11.jpg" data-thumb="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/flickr/s11.jpg" alt="" title="" />
             </div>
@@ -224,7 +228,7 @@
                     <input type="button" value="CONTACTANOS" id="contactanos"/>
                 </div>
             </li>
-            <li class="span3" style="width: 870px;" >
+            <li class="span3" style="width: 944px;" >
                 <div id="contenido"></div>
             </li>
         </ul>

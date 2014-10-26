@@ -12,10 +12,10 @@
 class Excursion extends CActiveRecord {
     
     public $image = array();
-    public $sigue_a = array();
+    /*public $sigue_a = array();
     public $joinSeguidaPor;
     public $joinSigueA;
-    public $idSeguidas;
+    public $idSeguidas;*/
     /**
      * @return string the associated database table name
      */
@@ -35,7 +35,7 @@ class Excursion extends CActiveRecord {
             array('nombre', 'length', 'max'=>100),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, nombre, descripcion, tipo_excursion_id, image, sigue_a, joinSeguidaPor, joinSigueA, idSeguidas', 'safe', 'on'=>'search'),
+            array('id, nombre, descripcion, tipo_excursion_id, image', 'safe', 'on'=>'search'),//, sigue_a joinSeguidaPor, joinSigueA, idSeguidas', 'safe', 'on'=>'search'),
         );
     }
 
@@ -48,8 +48,9 @@ class Excursion extends CActiveRecord {
         return array(
             'tipoExcursion' => array(self::BELONGS_TO, 'TipoExcursion', 'tipo_excursion_id'),
             'imagenes' => array(self::MANY_MANY, 'Imagen', 'imagen_excursion(imagen_id, excursion_id)'),
-            'sigueA' => array(self::HAS_MANY, 'SigueA', 'seguida_por_id'),
-            'seguidaPor' => array(self::HAS_ONE, 'SigueA', 'sigue_a_id'),
+            'tours' => array(self::HAS_MANY, 'Tour', 'excursion_id'),
+            //'sigueA' => array(self::HAS_MANY, 'SigueA', 'seguida_por_id'),
+            //'seguidaPor' => array(self::HAS_ONE, 'SigueA', 'sigue_a_id'),
         );
     }
 
@@ -63,7 +64,7 @@ class Excursion extends CActiveRecord {
             'descripcion' => 'Descripcion',
             'tipo_excursion_id' => 'Tipo Excursion',
             'ruta_imagen' => 'Ruta Imagen',
-            'sigue_a' => 'Sigue a..',
+            //'sigue_a' => 'Sigue a..',
         );
     }
 

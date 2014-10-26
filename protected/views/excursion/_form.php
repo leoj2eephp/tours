@@ -69,21 +69,46 @@
         <?php echo $form->error($model,'tipo_excursion_id'); ?>
     </div>
     
+    <!--<ul class="thumbnails">
+        <li class="span3" style="width: 250px;" >
+            <div class="thumbnail">
+                <?php
+                    /*$items = array();
+                    foreach($model->sigueA as $valor) {
+                        $items[$valor->sigue_a_id] = array('selected' => 'selected');
+                    }
+                    $selected = array($items);
+                ?>
+                <?php echo $form->labelEx($model, 'sigueA'); ?>
+                <?php
+                    if(!$model->isNewRecord)
+                        echo $form->listBox($model, 'sigueA', $excursionList, array('multiple'=>true, 'options'=>$selected[0]));
+                    else
+                        echo $form->listBox($model, 'sigueA', $excursionList, array('multiple'=>true));*/
+                ?>
+            </div>
+        </li>
+        <li class="span3" style="width: 101px;" >
+            <div class="thumbnail">
+                <?php
+                    /*$items = array();
+                    foreach($model->sigueA as $valor) {
+                        $items[$valor->sigue_a_id] = array('selected' => 'selected');
+                    }
+                    $selected = array($items);
+                ?>
+                <?php echo $form->labelEx($model, 'seguidaPor'); ?>
+                <?php
+                    if(!$model->isNewRecord)
+                        echo $form->listBox($model, 'seguidaPor', $excursionList, array('multiple'=>true, 'options'=>$selected[0]));
+                    else
+                        echo $form->listBox($model, 'seguidaPor', $excursionList, array('multiple'=>true));*/
+                ?>
+            </div>
+        </li>
+    </ul>-->
+    
     <div class="row">
-        <?php
-            $items = array();
-            foreach($model->sigueA as $valor) {
-                $items[$valor->sigue_a_id] = array('selected' => 'selected');
-            }
-            $selected = array($items);
-        ?>
-        <?php echo $form->labelEx($model, 'sigueA'); ?>
-        <?php
-            if(!$model->isNewRecord)
-                echo $form->listBox($model, 'sigueA', $excursionList, array('multiple'=>true, 'options'=>$selected[0]));
-            else
-                echo $form->listBox($model, 'sigueA', $excursionList, array('multiple'=>true));
-        ?>
     </div>
     
     <!--<div class="row" style="float: left;">

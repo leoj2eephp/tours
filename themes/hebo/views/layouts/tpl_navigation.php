@@ -42,6 +42,7 @@
                                     array('label'=>'Detalle Servicio', 'url'=>array('/detalleServicio/admin')),
                                     array('label'=>'Tipo Excursión', 'url'=>array('/tipoExcursion/admin')),
                                     array('label'=>'Excursión', 'url'=>array('/excursion/admin')),
+                                    array('label'=>'Crear Tour', 'url'=>array('/tour/admin')),
                                 )),
                         array('label'=>'Cotizar', 'url'=>array('/cotizacion/create'),
                             'visible'=>Yii::app()->user->isGuest),
