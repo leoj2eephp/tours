@@ -8,6 +8,7 @@
  * @property integer $tour_id
  * @property integer $excursion_id
  * @property integer $primera
+ * @property integer $tipo_excursion_id
  */
 class Tour extends CActiveRecord {
     
@@ -27,11 +28,11 @@ class Tour extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('primera', 'required'),
-            array('tour_id, excursion_id, primera', 'numerical', 'integerOnly'=>true),
+            array('primera, tipo_excursion_id', 'required'),
+            array('tour_id, excursion_id, primera, tipo_excursion_id', 'numerical', 'integerOnly'=>true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, tour_id, excursion_id, primera', 'safe', 'on'=>'search'),
+            array('id, tour_id, excursion_id, primera, tipo_excursion_id', 'safe', 'on'=>'search'),
         );
     }
 
@@ -43,6 +44,7 @@ class Tour extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'excursions' => array(self::BELONGS_TO, 'Excursion', 'excursion_id'),
+            'tipoExcursion' => array(self::BELONGS_TO, 'TipoExcursion', 'tipo_excursion_id'),
         );
     }
 
@@ -56,6 +58,7 @@ class Tour extends CActiveRecord {
             'excursion_id' => 'Excursion',
             'primera' => 'Primera',
             'nombre' => 'Tours',
+            'tipo_excursion_id' => 'Tipo Excursión',
         );
     }
 
@@ -78,6 +81,7 @@ class Tour extends CActiveRecord {
             //$criteria->with = array('excursions');
             $criteria->compare('t.id',$this->id);
             $criteria->compare('nombre',$this->nombre);
+            //$criteria->compare('tipo_excursion_id',$this->tipo_excursion_id);
             /*$criteria->compare('tour_id',$this->tour_id);
             $criteria->compare('excursion_id',$this->excursion_id);
             $criteria->compare('primera',$this->primera);*/

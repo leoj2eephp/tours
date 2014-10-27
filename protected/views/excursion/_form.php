@@ -62,12 +62,6 @@
         <?php echo $form->textArea($model,'descripcion',array('rows'=>6, 'cols'=>150, 'style'=>'width: 605px;')); ?>
         <?php echo $form->error($model,'descripcion'); ?>
     </div>
-
-    <div class="row">
-        <?php echo $form->labelEx($model,'tipo_excursion_id'); ?>
-        <?php echo $form->dropDownList($model, 'tipo_excursion_id', $tipoExcursionList); ?>
-        <?php echo $form->error($model,'tipo_excursion_id'); ?>
-    </div>
     
     <!--<ul class="thumbnails">
         <li class="span3" style="width: 250px;" >

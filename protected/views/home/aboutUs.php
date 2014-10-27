@@ -1,6 +1,6 @@
 <li class="span3" style="width: 450px;">
     <div class="thumbnail" style="width: 450px;">
-        <p class="font_h2">Sobre nosotros</p>
+        <p class="font_h2"><b>Sobre nosotros</b></p>
         <p class="font_parrafo">
             Somos una agencia que nace el año 2008 producto de una gran vocación de servicio, pasión y necesidad de entregar un servicio personalizado,  capaz de encantar a nuestros clientes mostrándoles nuestra tierra y logrando que sientan y vivan la magia del desierto más árido del mundo, un lugar que los sorprenderá.
         </p>

@@ -36,6 +36,7 @@
 ?>
     <ul class="thumbnails">
         <li class="span3" style="width: 608px;">
+        <?php if(isset($excursion['imagenes']) && count($excursion['imagenes']) > 0) { ?>
             <div class="slider-bootstrap">
                 <div class="slider-wrapper theme-default">
                     <div class="nivoSlider slider-nivo-excursion">
@@ -43,13 +44,14 @@
                         foreach($excursion['imagenes'] as $imagen) {
                             if(isset($imagen['ruta_imagen']))
                                 echo '<img src="'.$imagen['ruta_imagen'].'" data-thumb="'.$imagen['ruta_imagen'].'" alt="" title="" />';
-                            else
-                                echo 'SIN IMAGEN';
                         }
                     ?>
                     </div>
                 </div>
             </div>
+        <?php } else {
+                echo '<img src="'.Yii::app()->theme->baseUrl.'/img/noimage.jpg" />';
+            } ?>
         </li>
         <li class="span3" style="width: 309px;">
             <div class="backColorSubMenus">
@@ -65,6 +67,6 @@
 ?>
 <pre>
     <?php 
-       //print_r($excursiones);
+       //print_r();
     ?>
 </pre>

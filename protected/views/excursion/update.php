@@ -16,4 +16,4 @@ $this->menu=array(
 
 <h1>Update Excursion <?php echo $model->id; ?></h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model,'tipoExcursionList'=>$tipoExcursionList,'excursionList'=>$excursionList)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model,'excursionList'=>$excursionList)); ?>

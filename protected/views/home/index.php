@@ -64,13 +64,13 @@
             background: url('<?php echo Yii::app()->theme->baseUrl;?>/img/sombra.png') 100% 0px no-repeat;
         }
         
-        .font_h2 { font: normal normal normal 18px/1.4em 'open sans', sans-serif; }
+        .font_h2 { font: normal normal normal 16px/1.4em 'open sans', sans-serif; }
         .font_parrafo { font: normal normal normal 13px/1.4em 'open sans', sans-serif; color: rgb(62, 62, 62); }
-        .tourTitle { position: relative; top: 8px; left: 14px; color: white;}
+        .tourTitle { position: relative; top: 2px; left: 14px; color: white;}
         
         /* Estilos para el menu horizontal */
         a { color: rgb(117, 100, 100); }
-        .bordes { border-top: 1px solid; border-bottom: 1px solid; }
+        .bordes { border-top: 1px solid rgba(71, 116, 170, 0.239216); border-bottom: 1px solid rgba(71, 116, 170, 0.239216); }
         .menu {
             list-style:none;
             padding:0px;
@@ -94,6 +94,7 @@
         .menu li a:hover {
             color: white;
             background-color: #A39292;
+            border-radius: 5px;
         }
         .menu li .notHover:hover {
             cursor: default;
@@ -106,7 +107,7 @@
             list-style:none;
             padding:0px;
             margin:0px;
-            background: orange;
+            background: rgba(234, 169, 86, 0.811765);
         }
         .menu li ul a {
             width: 150px;
@@ -115,30 +116,45 @@
         }
         .menu li:hover > ul {
             display:block;
+            border-radius: 5px;
         }
         
         /* Full tours sub-menus */
         .rightTourMenu { width: 308px; text-align: right; background-color: rgba(171, 171, 171, 0.219608); border-radius: 5px; height: 34px; }
         .backColorSubMenus { background-color: rgba(171, 171, 171, 0.219608); border-radius: 5px; height: 34px; }
-        .spanDiv { margin-right: 10px; position: relative; top: 5px; padding-left: 10px; padding-right: 10px; }
+        .spanDiv { margin-right: 10px; position: relative; top: 7px; padding-left: 10px; padding-right: 10px; }
+        .buttonNoBorder { border: none; text-align: center; color: #717171; background-color: rgba(171, 171, 171, 0.219608); border-radius: 5px; height: 34px; }
+        .rightDaysMenus { top: 5px; position: relative; }
+        .rightDaysMenus:hover { cursor: pointer; }
+        
+        .divLiInicio { width: 32%; margin-right: -7px; }
+        .sombrasInicioDiv {
+            -webkit-box-shadow: 5px 5px 3px -1px rgba(120,120,120,1);
+            -moz-box-shadow: 5px 5px 3px -1px rgba(120,120,120,1);
+            box-shadow: 5px 5px 3px -1px rgba(120,120,120,1);
+        }
+        
     </style>
     
     <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/js/nivo-slider/jquery.nivo.slider.pack.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             
+            $("#inicio").click(function(){
+                $("#contenido").load('home/inicio');
+            });
             $("#sobreNosotros").click(function(){
                 $("#contenido").load('home/aboutUs');
             });
-            $("#halfDay").click(function(){
-                $("#contenido").load('home/halfDay');
+            $(".tipoExcursion").click(function(){
+                $("#contenido").load('home/tipoExcursion?idTipoExcursion='+$(this).attr("id"));
             });
-            $("#fullDay").click(function(){
-                $("#contenido").load('home/fullDay');
+            /*$("#halfDay").click(function(){
+                $("#contenido").load('home/halfDay');
             });
             $("#fullDayExtra").click(function(){
                 $("#contenido").load('home/fullDayExtra');
-            });
+            });*/
             
             $('#slider-nivo').nivoSlider({
                 effect: 'boxRandom',
@@ -148,6 +164,8 @@
                 pauseTime: 2500,
             });
             
+            $("#contenido").load('home/inicio');
+            
         });
     </script>
 </head>
@@ -156,8 +174,10 @@
     <div class="slider-bootstrap"><!-- start slider -->
     	<div class="slider-wrapper theme-default" style="padding-left: 11px;" >
             <div id="slider-nivo" class="nivoSlider" style="height: 150px; width: 99%;">
-                <img src="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/flickr/s10.jpg" data-thumb="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/flickr/s10.jpg" alt="" title="" />
-                <img src="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/flickr/s11.jpg" data-thumb="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/flickr/s11.jpg" alt="" title="" />
+                <img src="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/header/headerImg1.jpg" data-thumb="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/header/headerImg1.jpg" alt="" title="" />
+                <img src="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/header/headerImg2.jpg" data-thumb="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/header/headerImg2.jpg" alt="" title="" />
+                <img src="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/header/headerImg3.jpg" data-thumb="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/header/headerImg3.jpg" alt="" title="" />
+                <img src="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/header/headerImg4.jpg" data-thumb="<?php echo Yii::app()->theme->baseUrl;?>/img/slider/header/headerImg4.jpg" alt="" title="" />
             </div>
         </div>
 
@@ -183,16 +203,18 @@
             </li>
             <li class="span3" style="width: 960px;">
                 <div class="thumbnail" style="text-align: right; padding-top: 11px; margin-bottom: 15px;">
-                    <input type="button" id="iniciarSesion" value="INICIAR SESIÓN" />
+                    <input type="button" id="iniciarSesion" value="INICIAR SESIÓN" class="font_h2 buttonNoBorder" />
                 </div>
                 <div class="thumbnail">
                     <ul class="menu">
                         <li><a href="#" class="notHover" style="width: 328px;"></a></li>
                         <li><a href="" class="bordes">EXCURSIONES</a>
                             <ul>
-                                <li><a href="#" id="halfDay">HALF DAY</a></li>
-                                <li><a href="#" id="fullDay">FULL DAY</a></li>
-                                <li><a href="#" id="fullDayExtra">FULL DAY EXTRA</a></li>
+                            <?php
+                                foreach($tiposExcursionModel as $tem) {
+                                    echo '<li><a href="#" id="'.$tem['id'].'" class="tipoExcursion">'.$tem['nombre'].'</a></li>';
+                                }
+                            ?>
                             </ul>
                         </li>
                         <li><a href="#" class="bordes">TREKKING</a></li>
@@ -219,17 +241,26 @@
                     <input type="button" value="SOBRE NOSOTROS" id="sobreNosotros" class="subMenu"/>
                 </div>
                 <div class="thumbnail" style="padding-top: 10px;">
-                    <input type="button" value="PANORAMICAS" id="panoramica" class="subMenu"/>
+                    <input type="button" value="PANORÁMICAS" id="panoramica" class="subMenu"/>
                 </div>
                 <div class="thumbnail" style="padding-top: 10px;">
-                    <input type="button" value="GALERIA" id="galeria" class="subMenu"/>
+                    <input type="button" value="GALERÍA" id="galeria" class="subMenu"/>
                 </div>
                 <div class="thumbnail" style="padding-top: 10px;">
-                    <input type="button" value="CONTACTANOS" id="contactanos"/>
+                    <input type="button" value="CONTÁCTANOS" id="contactanos"/>
                 </div>
             </li>
             <li class="span3" style="width: 944px;" >
                 <div id="contenido"></div>
+            </li>
+        </ul>
+        <ul class="thumbnails">
+            <li class="span3" style="width: 101px;">
+            </li>
+            <li class="span3" style="margin-left: 0px; width: 164px;">
+                <div class="backColorSubMenus">
+                    <span class="spanDiv titleSizeFont" style="text-align: right;"><b>PROGRAMAS</b></span>
+                </div>
             </li>
         </ul>
     </div>

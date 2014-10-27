@@ -13,13 +13,12 @@
 	<?php echo CHtml::encode($data->tour_id); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('excursion_id')); ?>:</b>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('excursion.nombre')); ?>:</b>
 	<?php echo CHtml::encode($data->excursion_id); ?>
 	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('primera')); ?>:</b>
-	<?php echo CHtml::encode($data->primera); ?>
+        
+        <b><?php echo CHtml::encode($data->getAttributeLabel('tipoExcursion.nombre')); ?>:</b>
+	<?php echo CHtml::encode($data->tipoExcursion->nombre); ?>
 	<br />
-
 
 </div>

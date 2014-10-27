@@ -22,6 +22,5 @@ $this->menu=array(
 		'id',
 		'nombre',
 		'descripcion',
-		'tipoExcursion.nombre',
 	),
 )); ?>

@@ -5,6 +5,7 @@
 ?>
 <head>
     <script>
+        var arrayJS = null;
         <?php
             $baseURL = Yii::app()->request->baseUrl;
             echo 'var baseURL = "'.$baseURL.'";';
@@ -37,15 +38,20 @@
         }
 
         $(document).ready(function(){
-            var arrayJS=<?php echo json_encode($tours);?>;
+        <?php
+            if(isset($tours)) { ?>
+                arrayJS=<?php echo json_encode($tours);?>;
+        <?php } ?>
             $(".addButton").click(function(){
                 addButton();
             });
-
+            
             $("select>option").removeAttr("selected");
-            for(var i=0;i<arrayJS.length;i++) {
-                id = "ex_"+i;
-                $("#"+id+">option[value="+arrayJS[i]["excursion_id"]+"]").attr("selected",true);
+            if(arrayJS != null) {
+                for(var i=0;i<arrayJS.length;i++) {
+                    id = "ex_"+i;
+                    $("#"+id+">option[value="+arrayJS[i]["excursion_id"]+"]").attr("selected",true);
+                }
             }
         });
         
@@ -68,6 +74,12 @@
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
+        
+        <div class="row">
+            <?php echo $form->labelEx($model,'tipo_excursion_id'); ?>
+            <?php echo $form->dropDownList($model, 'tipo_excursion_id', $tipoExcursionList); ?>
+            <?php echo $form->error($model,'tipo_excursion_id'); ?>
+        </div>
         
         <table id="creaTour">
         <?php

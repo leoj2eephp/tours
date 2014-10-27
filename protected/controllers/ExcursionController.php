@@ -93,15 +93,12 @@ class ExcursionController extends Controller {
             if($success)
                 $this->redirect(array('view','id'=>$model->id));
         }
-
-        $modelTipoExcursion = TipoExcursion::model()->findAll();
-        $tipoExcursionList = CHtml::listData($modelTipoExcursion, 'id', 'nombre');
+        
         $modelExcursion = Excursion::model()->findAll();
         $excursionList = CHtml::listData($modelExcursion, 'id', 'nombre');
         
         $this->render('create',array(
             'model'=>$model,
-            'tipoExcursionList'=>$tipoExcursionList,
             'excursionList'=>$excursionList,
         ));
     }
@@ -159,9 +156,7 @@ class ExcursionController extends Controller {
             if($success)
                 $this->redirect(array('view','id'=>$model->id));
         }
-
-        $modelTipoExcursion = TipoExcursion::model()->findAll();
-        $tipoExcursionList = CHtml::listData($modelTipoExcursion, 'id', 'nombre');
+        
         $criteria = new CDbCriteria;
         $criteria->condition = 'id != :id';
         $criteria->params = array(":id"=>$model->id);
@@ -170,7 +165,6 @@ class ExcursionController extends Controller {
         
         $this->render('update',array(
             'model'=>$model,
-            'tipoExcursionList'=>$tipoExcursionList,
             'excursionList'=>$excursionList,
         ));
     }

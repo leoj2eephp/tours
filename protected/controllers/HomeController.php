@@ -21,36 +21,32 @@ class HomeController extends Controller {
     }
     
     public function actionIndex() {
-       $this->render("index");
+        $tiposExcursionModel = TipoExcursion::model()->findAll();
+        $this->render("index", array("tiposExcursionModel"=>$tiposExcursionModel));
+    }
+    
+    public function actionInicio() {
+        $this->renderPartial("inicio");
     }
     
     public function actionAboutUs() {
         $this->renderPartial("aboutUs");
     }
     
-    public function actionHalfDay() {
-        $model = Excursion::model()->findAll('tipo_excursion_id = 1');
-        $this->renderPartial("halfDay", array("model"=>$model));
-    }
-    
-    public function actionFullDay() {
+    public function actionTipoExcursion($idTipoExcursion) {
         try {
-            $model = Tour::model()->findAll(array('condition'=>'primera=1'));
+            $model = Tour::model()->findAll(array('condition'=>'primera=1 AND tipo_excursion_id = :teId', 'params'=>array(':teId'=>$idTipoExcursion)));
             $tours = array();
             foreach($model as $t) {
                 $tours[] = Yii::app()->db->createCommand('CALL getFullTour2('.$t['id'].')')->queryAll();
             }
+            $tipoExcursionModel = TipoExcursion::model()->findByPk($idTipoExcursion);
         } catch (Exception $ex) {
             echo '<pre>';
             print_r($ex);
             echo '</pre>';
         }
-        $this->renderPartial("fullDay", array("tours"=>$tours));
-    }
-    
-    public function actionFullDayExtra() {
-        $model = Excursion::model()->findAll('tipo_excursion_id = 3');
-        $this->renderPartial("fullDayExtra", array("model"=>$model));
+        $this->renderPartial("fullDay", array("tours"=>$tours,'tipoExcursionModel'=>$tipoExcursionModel));
     }
  
     public function actionShowExcursion($id) {

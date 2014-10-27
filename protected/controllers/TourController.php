@@ -42,11 +42,10 @@ class TourController extends Controller {
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id)
-    {
-            $this->render('view',array(
-                    'model'=>$this->loadModel($id),
-            ));
+    public function actionView($id) {
+        $this->render('view',array(
+            'model'=>$this->loadModel($id),
+        ));
     }
 
     /**
@@ -82,7 +81,10 @@ class TourController extends Controller {
 
         $modelExcursiones = Excursion::model()->findAll();
         $excursiones = CHtml::listData($modelExcursiones, 'id', 'nombre');
-        $this->render('create',array('model'=>$model,'excursiones'=>$excursiones));
+        $modelTipoExcursion = TipoExcursion::model()->findAll();
+        $tipoExcursionList = CHtml::listData($modelTipoExcursion, 'id', 'nombre');
+        //$tours = Yii::app()->db->createCommand('CALL getFullTour2('.$id.')')->queryAll();
+        $this->render('create',array('model'=>$model,'excursiones'=>$excursiones,'tipoExcursionList'=>$tipoExcursionList,));
     }
 
     /**
@@ -98,10 +100,12 @@ class TourController extends Controller {
                 $this->redirect(array('view','id'=>$model->id));
         }
         
+        $modelTipoExcursion = TipoExcursion::model()->findAll();
+        $tipoExcursionList = CHtml::listData($modelTipoExcursion, 'id', 'nombre');
         $modelExcursiones = Excursion::model()->findAll();
         $excursiones = CHtml::listData($modelExcursiones, 'id', 'nombre');
         $tours = Yii::app()->db->createCommand('CALL getFullTour2('.$id.')')->queryAll();
-        $this->render('update',array('model'=>$model,'excursiones'=>$excursiones,'tours'=>$tours));
+        $this->render('update',array('model'=>$model,'excursiones'=>$excursiones,'tours'=>$tours,'tipoExcursionList'=>$tipoExcursionList));
     }
 
     /**
