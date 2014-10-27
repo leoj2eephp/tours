@@ -28,8 +28,8 @@ class Tour extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('primera, tipo_excursion_id', 'required'),
-            array('tour_id, excursion_id, primera, tipo_excursion_id', 'numerical', 'integerOnly'=>true),
+            array('primera, excursion_id', 'required'),
+            array('tour_id, excursion_id, tipo_excursion_id', 'numerical', 'integerOnly'=>true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, tour_id, excursion_id, primera, tipo_excursion_id', 'safe', 'on'=>'search'),

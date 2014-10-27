@@ -75,8 +75,7 @@ class TourController extends Controller {
                 $aux = $dato;
                 $first = false;
             }
-            if($model->save())
-                $this->redirect(array('view','id'=>$model->id));
+            $this->redirect(array('admin'));
         }
 
         $modelExcursiones = Excursion::model()->findAll();

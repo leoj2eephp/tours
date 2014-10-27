@@ -21,12 +21,12 @@
                     echo 'html += "<option value='.$valor.'>'.$dato.'</option>";';
                 }
             ?>
-            html += '</select><input type="hidden" name="Tour['+lastRow+'][primera]" value="0" /></td>';
+            html += '</select><input type="hidden" name="Tour['+lastRow+'][primera]" value="0" />';
+            html += '<input type="hidden" name="Tour['+lastRow+'][tipo_excursion_id]" class="tipo_excursion_id" value="'+$("#Tour_0_tipo_excursion_id").val()+'"/></td>';
             html += '<td><div style="float: left;"><input type="button" value="" class="addButton" onClick="addButton()" style="border: none; \n\
                     background: url('+baseURL+'/images/add_button_min.png)no-repeat;padding-bottom: 11px; width: 23px;"/></div>\n\
                         <div style="float: left;"><input type="button" value="" class="removeButton" onClick="removeButton($(this))" style="border: none; \n\
                     background: url('+baseURL+'/images/delete_button_min.png)no-repeat;padding-bottom: 11px; width: 23px;"/></div></td>';
-            html += '<input="hidden" name="Tour['+lastRow+']primera" value="false" />';
             html += '</tr>';
 
             $("#creaTour tr:last").after(html);
@@ -53,6 +53,10 @@
                     $("#"+id+">option[value="+arrayJS[i]["excursion_id"]+"]").attr("selected",true);
                 }
             }
+            
+            $("#Tour_0_tipo_excursion_id").change(function(){
+                $(".tipo_excursion_id").val($(this).val());
+            });
         });
         
     </script>
@@ -76,9 +80,9 @@
 	<?php echo $form->errorSummary($model); ?>
         
         <div class="row">
-            <?php echo $form->labelEx($model,'tipo_excursion_id'); ?>
-            <?php echo $form->dropDownList($model, 'tipo_excursion_id', $tipoExcursionList); ?>
-            <?php echo $form->error($model,'tipo_excursion_id'); ?>
+            <?php echo $form->labelEx($model,'[0]tipo_excursion_id'); ?>
+            <?php echo $form->dropDownList($model, '[0]tipo_excursion_id', $tipoExcursionList); ?>
+            <?php echo $form->error($model,'[0]tipo_excursion_id'); ?>
         </div>
         
         <table id="creaTour">
