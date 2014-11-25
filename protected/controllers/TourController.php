@@ -154,7 +154,7 @@ class TourController extends Controller {
      * @throws CHttpException
      */
     public function loadModel($id) {
-        $model=Tour::model()->findByPk($id);
+        $model=Tour::model()->with("excursions")->findByPk($id);
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');
         return $model;

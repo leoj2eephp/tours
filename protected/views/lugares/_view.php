@@ -18,8 +18,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('tipoServicio.nombre')); ?>:</b>
-	<?php echo CHtml::encode($data->primera); ?>
+	<?php echo CHtml::encode($data->lugars->tipo_servicio_id); ?>
 	<br />
-
 
 </div>

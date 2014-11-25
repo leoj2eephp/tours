@@ -6,16 +6,53 @@
 <head>
     <script>
         var arrayJS = null;
+        var idTipoServicioSelected = null;
         <?php
             $baseURL = Yii::app()->request->baseUrl;
             echo 'var baseURL = "'.$baseURL.'";';
+            echo 'idTipoServicioSelected = '.$model["lugars"]["tipo_servicio_id"];
         ?>
             
+        $(document).ready(function(){
+        <?php
+            if(isset($lugares)) { ?>
+                arrayJS=<?php echo json_encode($lugares);?>;
+        <?php } ?>
+            $(".addButton").click(function(){
+                addButton();
+            });
+            
+            $(".lugar>option").removeAttr("selected");
+            if(arrayJS != null) {
+                for(var i=0;i<arrayJS.length;i++) {
+                    id = "ex_"+i;
+                    $("#"+id+">option[value="+arrayJS[i]["lugar_id"]+"]").attr("selected",true);
+                }
+            }
+            //forzar tipo servicio seleccionado
+            $("#tipoServicioId>option").each(function(i,o) {
+                if(o.value == idTipoServicioSelected) {
+                   $("#tipoServicioId>option")[i].selected = true;
+                }
+            });
+            
+            $("#tipoServicioId").change(function(){
+                $.ajax({
+                    url: baseURL+'/index.php/lugares/getByServiceType',
+                    data: 'idTipoServicio='+$(this).val(),
+                    dataType: 'html',
+                    success: function(data){
+                        $(".lugar").html(data);
+                    }
+                });
+            });
+        });
+        
         function addButton(){
             lastRow = parseInt($("#creaLugares tr[index]:last").attr("index")) + 1;
             html = '<tr class="row" index='+lastRow+' style="height: 56px;">';
             html += '<td><span>Sigue a.. </span></td>';
-            html += '<td><select name="Lugares['+lastRow+'][lugar_id]" id="ex_'+lastRow+'">';
+            html += '<td><select name="Lugares['+lastRow+'][lugar_id]" id="ex_'+lastRow+'" class="lugar">';
             <?php
                 foreach($lugars as $valor => $dato) {
                     echo 'html += "<option value='.$valor.'>'.$dato.'</option>";';
@@ -36,34 +73,6 @@
             index = a.parent().parent().parent().attr("index");
             $("tr[index="+index+"]").remove();
         }
-
-        $(document).ready(function(){
-        <?php
-            if(isset($tours)) { ?>
-                arrayJS=<?php echo json_encode($tours);?>;
-        <?php } ?>
-            $(".addButton").click(function(){
-                addButton();
-            });
-            
-            $("select>option").removeAttr("selected");
-            if(arrayJS != null) {
-                for(var i=0;i<arrayJS.length;i++) {
-                    id = "ex_"+i;
-                    $("#"+id+">option[value="+arrayJS[i]["lugar_id"]+"]").attr("selected",true);
-                }
-            }
-            
-            $("#tipoServicioId").change(function(){
-                $.ajax({
-                    url: baseURL+'/index.php/lugares/getByServiceType',
-                    data: 'idTipoServicio='+$(this).val(),
-                    success: function(datos) {
-                        alert(datos);
-                    }
-                });
-            });
-        });
     </script>
 </head>
 <div class="form">
@@ -83,7 +92,13 @@
             
         <div class="row">
             Tipo Servicio: 
-            <?php echo $form->dropDownList($model['lugars'], 'tipo_servicio_id', $tipoServicioList, array("id"=>"tipoServicioId")); ?>
+            <?php
+            if($model->isNewRecord) {
+                echo $form->dropDownList($modelTS, 'id', $tipoServicioList, array("id"=>"tipoServicioId")); 
+            } else {
+                echo $form->dropDownList($model['lugars'], 'tipo_servicio_id', $tipoServicioList, array("id"=>"tipoServicioId")); 
+            }
+            ?>
 	</div>
         
         <table id="creaLugares">
@@ -93,7 +108,7 @@
                     <td style="width: 100px;"><span>Lugares: </span></td>
                     <td>
                         <?php 
-                            echo $form->dropDownList($model, '[0]lugar_id', $lugars, array("id"=>"ex_0"));
+                            echo $form->dropDownList($model, '[0]lugar_id', $lugars, array("id"=>"ex_0", "class"=>"lugar"));
                             echo $form->hiddenField($model, '[0]primera', array("value"=>"1"));
                         ?>
                     </td>
@@ -113,7 +128,7 @@
                         }
             ?>
                         <td>
-                            <?php echo CHtml::activeDropDownList($model, '['.$index.']lugar_id', $lugars, array("id"=>"ex_".$index));
+                            <?php echo CHtml::activeDropDownList($model, '['.$index.']lugar_id', $lugars, array("id"=>"ex_".$index, "class"=>"lugar"));
                             ?>
                             <?php 
                                 if($first)
@@ -153,7 +168,7 @@
 	</div>
         
         <pre>
-        <?php //print_r($model); ?>    
+        <?php //print_r($model); ?>
         </pre>
 
 <?php $this->endWidget(); ?>

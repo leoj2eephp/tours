@@ -6,11 +6,41 @@
 <head>
     <script>
         var arrayJS = null;
+        var idTipoExcursionSelected = null;
         <?php
             $baseURL = Yii::app()->request->baseUrl;
             echo 'var baseURL = "'.$baseURL.'";';
+            echo 'idTipoExcursionSelected = '.$model->tipo_excursion_id;
         ?>
+
+        $(document).ready(function(){
+        <?php
+            if(isset($tours)) { ?>
+                arrayJS=<?php echo json_encode($tours);?>;
+        <?php } ?>
+            $(".addButton").click(function(){
+                addButton();
+            });
             
+            $("select>option").removeAttr("selected");
+            if(arrayJS != null) {
+                for(var i=0;i<arrayJS.length;i++) {
+                    id = "ex_"+i;
+                    $("#"+id+">option[value="+arrayJS[i]["excursion_id"]+"]").attr("selected",true);
+                }
+            }
+            //forzar tipo servicio seleccionado
+            $("#Tour_0_tipo_excursion_id>option").each(function(i,o) {
+                if(o.value == idTipoExcursionSelected) {
+                   $("#Tour_0_tipo_excursion_id>option")[i].selected = true;
+                }
+            });
+            
+            $("#Tour_0_tipo_excursion_id").change(function(){
+                $(".tipo_excursion_id").val($(this).val());
+            });
+        });
+        
         function addButton(){
             lastRow = parseInt($("#creaTour tr[index]:last").attr("index")) + 1;
             html = '<tr class="row" index='+lastRow+' style="height: 56px;">';
@@ -36,28 +66,6 @@
             index = a.parent().parent().parent().attr("index");
             $("tr[index="+index+"]").remove();
         }
-
-        $(document).ready(function(){
-        <?php
-            if(isset($tours)) { ?>
-                arrayJS=<?php echo json_encode($tours);?>;
-        <?php } ?>
-            $(".addButton").click(function(){
-                addButton();
-            });
-            
-            $("select>option").removeAttr("selected");
-            if(arrayJS != null) {
-                for(var i=0;i<arrayJS.length;i++) {
-                    id = "ex_"+i;
-                    $("#"+id+">option[value="+arrayJS[i]["excursion_id"]+"]").attr("selected",true);
-                }
-            }
-            
-            $("#Tour_0_tipo_excursion_id").change(function(){
-                $(".tipo_excursion_id").val($(this).val());
-            });
-        });
         
     </script>
 </head>
@@ -80,9 +88,9 @@
 	<?php echo $form->errorSummary($model); ?>
         
         <div class="row">
-            <?php //echo $form->labelEx($model,'[0]tipo_excursion_id'); ?>
-            <?php //echo $form->dropDownList($model, '[0]tipo_excursion_id', $tipoExcursionList); ?>
-            <?php //echo $form->error($model,'[0]tipo_excursion_id'); ?>
+            <?php echo $form->labelEx($model,'[0]tipo_excursion_id'); ?>
+            <?php echo $form->dropDownList($model, '[0]tipo_excursion_id', $tipoExcursionList); ?>
+            <?php echo $form->error($model,'[0]tipo_excursion_id'); ?>
         </div>
         
         <table id="creaTour">

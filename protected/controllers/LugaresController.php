@@ -53,23 +53,38 @@ class LugaresController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate()
-    {
-            $model=new Lugares;
-
-            // Uncomment the following line if AJAX validation is needed
-            // $this->performAjaxValidation($model);
-
-            if(isset($_POST['Lugares']))
-            {
-                    $model->attributes=$_POST['Lugares'];
-                    if($model->save())
-                            $this->redirect(array('view','id'=>$model->id));
+    public function actionCreate() {
+        $model=new Lugares;
+        $modelTS = new TipoServicio;
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+        
+        if(isset($_POST['Lugares'])) {
+            $idsArray = array();
+            foreach ($_POST['Lugares'] as $j=>$postModel) {
+                if (isset($_POST['Lugares'][$j])) {
+                    $lugaresModel = new Lugares;
+                    $lugaresModel->attributes=$postModel;
+                    if($lugaresModel->save())
+                        $idsArray[] = $lugaresModel->id;
+                }
             }
+            $first = true;
+            foreach (array_reverse($idsArray) as $dato) {
+                if(!$first) {
+                    Lugares::model()->updateByPk($dato, array('lugares_id'=>$aux));
+                }
+                $aux = $dato;
+                $first = false;
+            }
+            $this->redirect(array('admin'));
+        }
 
-            $this->render('create',array(
-                    'model'=>$model,
-            ));
+        $modelTipoServicio= TipoServicio::model()->findAll();
+        $tipoServicioList = CHtml::listData($modelTipoServicio, 'id', 'nombre');
+        $modelLugars = Lugar::model()->findAll('tipo_servicio_id = :servicioId',array(':servicioId'=>key($tipoServicioList)));
+        $lugars = CHtml::listData($modelLugars, 'id', 'nombre');
+        $this->render('create',array('model'=>$model,'lugars'=>$lugars,'tipoServicioList'=>$tipoServicioList,'modelTS'=>$modelTS));
     }
 
     /**
@@ -83,16 +98,15 @@ class LugaresController extends Controller {
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if(isset($_POST['Lugares']))
-        {
-                $model->attributes=$_POST['Lugares'];
-                if($model->save())
-                        $this->redirect(array('view','id'=>$model->id));
+        if(isset($_POST['Lugares'])) {
+            $model->attributes=$_POST['Lugares'];
+            if($model->save())
+                $this->redirect(array('view','id'=>$model->id));
         }
 
         $modelTipoServicio= TipoServicio::model()->findAll();
         $tipoServicioList = CHtml::listData($modelTipoServicio, 'id', 'nombre');
-        $modelLugars = Lugar::model()->findAll();
+        $modelLugars = Lugar::model()->findAll('tipo_servicio_id = :tsi', array(':tsi'=>$model->lugars->tipo_servicio_id));
         $lugars = CHtml::listData($modelLugars, 'id', 'nombre');
         $lugares = Yii::app()->db->createCommand('CALL getFullLugares2('.$id.')')->queryAll();
         $this->render('update',array('model'=>$model,'lugars'=>$lugars,'lugares'=>$lugares,'tipoServicioList'=>$tipoServicioList));
@@ -161,8 +175,13 @@ class LugaresController extends Controller {
     }
     
     public function actionGetByServiceType($idTipoServicio) {
-        return $modelLugars = Lugar::model()->findAll(
-            array('condition'=>'tipo_servicio_id = :tipo_servicio_id', 'params'=>array(':tipo_servicio_id'=>$idTipoServicio)));
+        $lista = Lugar::model()->findAll('tipo_servicio_id = :servicioId',array(':servicioId'=>$idTipoServicio));
+        $lista = CHtml::listData($lista, 'id', 'nombre');
+        //$lugares = $modelLugars = Lugar::model()->findAll(
+            //array('select'=>'nombre','condition'=>'tipo_servicio_id = :tipo_servicio_id', 'params'=>array(':tipo_servicio_id'=>$idTipoServicio)));
+        foreach($lista as $dato => $nombre) {
+            echo CHtml::tag('option',array('value'=>$dato),CHtml::encode($nombre),true);
+        }
     }
     
 }

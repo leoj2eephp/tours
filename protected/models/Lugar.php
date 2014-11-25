@@ -29,7 +29,7 @@ class Lugar extends CActiveRecord {
                     array('nombre', 'length', 'max'=>100),
                     // The following rule is used by search().
                     // @todo Please remove those attributes that should not be searched.
-                    array('id, nombre, tipo_servicio_id, tipoServicio.nombre', 'safe', 'on'=>'search'),
+                    array('id, nombre, tipo_servicio_id', 'safe', 'on'=>'search'),
             );
 	}
 

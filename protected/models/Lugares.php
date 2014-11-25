@@ -27,7 +27,7 @@ class Lugares extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('lugar_id, primera', 'required'),
+            //array('lugar_id, primera', 'required'),
             array('lugares_id, lugar_id, primera', 'numerical', 'integerOnly'=>true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.

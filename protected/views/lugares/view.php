@@ -23,7 +23,9 @@ $this->menu=array(
 	'attributes'=>array(
 		'id',
 		'lugares_id',
-		'lugar_id',
-		'primera',
+                'lugars.nombre',
+                'lugars.tipoServicio.nombre',
+		//'lugar_id',
+		//'primera',
 	),
 )); ?>
