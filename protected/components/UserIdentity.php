@@ -17,7 +17,7 @@ class UserIdentity extends CUserIdentity {
         $usuario = Usuario::model()->find($criteria);
         if(!isset($usuario)) {
             $this->errorCode=self::ERROR_USERNAME_INVALID;
-        } elseif($usuario->password != $this->password) {
+        } elseif (password_verify ($usuario->password, $this->password)) {
             $this->errorCode=self::ERROR_PASSWORD_INVALID;
         } else {
             //$this->_id=$usuario->clientes[0]->nombre.' '.$usuario->clientes[0]->ape_paterno;

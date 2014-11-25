@@ -42,6 +42,7 @@ class Lugar extends CActiveRecord {
             return array(
                 'tipoServicio' => array(self::BELONGS_TO, 'TipoServicio', 'tipo_servicio_id'),
                 'servicios' => array(self::HAS_MANY, 'Servicio', 'lugar_id'),
+                'lugares' => array(self::HAS_MANY, 'Lugares', 'lugar_id'),
             );
 	}
 

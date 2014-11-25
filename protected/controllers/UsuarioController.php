@@ -10,10 +10,10 @@ class UsuarioController extends Controller {
      * @return array action filters
      */
     public function filters() {
-            return array(
-                    'accessControl', // perform access control for CRUD operations
-                    'postOnly + delete', // we only allow deletion via POST request
-            );
+        return array(
+            'accessControl', // perform access control for CRUD operations
+            'postOnly + delete', // we only allow deletion via POST request
+        );
     }
 
     /**
@@ -23,13 +23,10 @@ class UsuarioController extends Controller {
      */
     public function accessRules() {
         return array(
-            array('allow',  // allow all users to perform 'index' and 'view' actions
-                    'actions'=>array('view'),
-                    'users'=>array('*'),
-            ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('admin','delete','create','update','asdf'),
-                    'users'=>Usuario::getTypeUsers(1, false), //usuario admin, no uppercase
+                    'actions'=>array('admin','delete','create','update','view'),
+                    'users'=>array('*'), //usuario admin, no uppercase
+                    //'roles'=>array('administrador'), //usuario admin, no uppercase
             ),
             array('deny',  // deny all users
                     'users'=>array('*'),
@@ -41,11 +38,10 @@ class UsuarioController extends Controller {
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id)
-    {
-            $this->render('view',array(
-                    'model'=>$this->loadModel($id),
-            ));
+    public function actionView($id) {
+        $this->render('view',array(
+            'model'=>$this->loadModel($id),
+        ));
     }
 
     /**
@@ -55,9 +51,15 @@ class UsuarioController extends Controller {
     public function actionCreate() {
         $model=new Usuario;
         if(isset($_POST['Usuario'])) {
-                $model->attributes=$_POST['Usuario'];
-                if($model->save())
-                        $this->redirect(array('view','id'=>$model->id));
+            $model->attributes=$_POST['Usuario'];
+            $model->password = password_hash($model->password, PASSWORD_DEFAULT);
+            if($model->save()){
+                $auth= Yii::app()->authManager;
+                $rol = $model->rol;
+                $rol = ($rol == 1)?'administrador':'agencia';
+                $auth->assign($rol,$model->id);
+                $this->redirect(array('view','id'=>$model->id));
+            }
         }
 
         $this->render('create',array(
@@ -73,15 +75,19 @@ class UsuarioController extends Controller {
      */
     public function actionUpdate($id) {
         $model=$this->loadModel($id);
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
-        if(isset($_POST['Usuario']))
-        {
-                $model->attributes=$_POST['Usuario'];
-                if($model->save())
-                        $this->redirect(array('view','id'=>$model->id));
+        
+        if(isset($_POST['Usuario'])) {
+            $model->attributes=$_POST['Usuario'];
+            $model->password = password_hash($model->password, PASSWORD_DEFAULT);
+            if($model->save()){
+                $auth= Yii::app()->authManager;
+                $rol = $model->rol;
+                Authassignment::model()->deleteAllByAttributes(array('userid'=>$id));
+                $auth->revoke($rol,$model->id);
+                $rol = ($rol == 1)?'administrador':'agencia';
+                $auth->assign($rol,$model->id);
+                $this->redirect(array('view','id'=>$model->id));
+            }
         }
 
         $this->render('update',array(
@@ -95,13 +101,12 @@ class UsuarioController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id)
-    {
-            $this->loadModel($id)->delete();
+    public function actionDelete($id) {
+        $this->loadModel($id)->delete();
 
-            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-            if(!isset($_GET['ajax']))
-                    $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        if(!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
     /**
@@ -119,14 +124,14 @@ class UsuarioController extends Controller {
      * Manages all models.
      */
     public function actionAdmin() {
-            $model=new Usuario('search');
-            $model->unsetAttributes();  // clear any default values
-            if(isset($_GET['Usuario']))
-                $model->attributes=$_GET['Usuario'];
-
-            $this->render('admin',array(
-                    'model'=>$model,
-            ));
+        $model=new Usuario('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['Usuario']))
+            $model->attributes=$_GET['Usuario'];
+        
+        $this->render('admin',array(
+            'model'=>$model,
+        ));
     }
 
     /**
@@ -136,24 +141,21 @@ class UsuarioController extends Controller {
      * @return Usuario the loaded model
      * @throws CHttpException
      */
-    public function loadModel($id)
-    {
-            $model=Usuario::model()->findByPk($id);
-            if($model===null)
-                    throw new CHttpException(404,'The requested page does not exist.');
-            return $model;
+    public function loadModel($id) {
+        $model=Usuario::model()->findByPk($id);
+        if($model===null)
+            throw new CHttpException(404,'The requested page does not exist.');
+        return $model;
     }
 
     /**
      * Performs the AJAX validation.
      * @param Usuario $model the model to be validated
      */
-    protected function performAjaxValidation($model)
-    {
-            if(isset($_POST['ajax']) && $_POST['ajax']==='usuario-form')
-            {
-                    echo CActiveForm::validate($model);
-                    Yii::app()->end();
-            }
+    protected function performAjaxValidation($model) {
+        if(isset($_POST['ajax']) && $_POST['ajax']==='usuario-form') {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
     }
 }

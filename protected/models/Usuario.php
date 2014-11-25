@@ -30,7 +30,7 @@ class Usuario extends CActiveRecord {
             return array(
                     array('username, password, rol, email', 'required'),
                     array('username, email', 'length', 'max'=>100),
-                    array('password, rol', 'length', 'max'=>40),
+                    array('password, rol', 'length', 'max'=>250),
                     array('email', 'email'),
                     array('id, username, password, rol, email', 'safe', 'on'=>'search'),
             );
@@ -73,19 +73,19 @@ class Usuario extends CActiveRecord {
      * based on the search/filter conditions.
      */
     public function search() {
-            // @todo Please modify the following code to remove attributes that should not be searched.
+        // @todo Please modify the following code to remove attributes that should not be searched.
 
-            $criteria=new CDbCriteria;
+        $criteria=new CDbCriteria;
 
-            $criteria->compare('id',$this->id);
-            $criteria->compare('username',$this->username,true);
-            $criteria->compare('password',$this->password,true);
-            $criteria->compare('rol',$this->rol,true);
-            $criteria->compare('email',$this->email,true);
+        $criteria->compare('id',$this->id);
+        $criteria->compare('username',$this->username,true);
+        $criteria->compare('password',$this->password,true);
+        $criteria->compare('rol',$this->rol,true);
+        $criteria->compare('email',$this->email,true);
 
-            return new CActiveDataProvider($this, array(
-                    'criteria'=>$criteria,
-            ));
+        return new CActiveDataProvider($this, array(
+                'criteria'=>$criteria,
+        ));
     }
 
     /**

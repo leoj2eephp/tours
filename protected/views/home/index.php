@@ -2,15 +2,24 @@
     <style>
         body { font: normal normal normal 13px/1.4em 'open sans', sans-serif; }
         .titleSizeFont { font-size: 14px; }
-        /*.slider-bootstrap::after{
-            content: 'asdfasdfads';
+        .slider-bootstrap:after {
+            content: '';
             position: absolute;
-            top: 100%;
-            bottom: -30px;
-            width: 165px;
-            right: -20px;
-            background: url('<?php //echo Yii::app()->theme->baseUrl;?>/img/slider/sombra-novoSlider.png') 100% 0px no-repeat;
-        }*/
+            top: 154px;
+            bottom: 0px;
+            width: 164px;
+            right: 0px;
+            background: url('/tours/themes/hebo/img/sombra.png') 100% 0px no-repeat;
+        }
+        .slider-bootstrap:before {
+            content: '';
+            position: absolute;
+            top: 154px;
+            bottom: 0px;
+            width: 164px;
+            left: -5px;
+            background: url('/tours/themes/hebo/img/sombra.png') 0px 0px no-repeat;
+        }
         .navbar { display: none; }
         .container { display: none; }
         .row { padding: 5px 74px 0 40px; }
@@ -48,6 +57,7 @@
             background-position: center; height: 28px; 
             color: white;
         }
+        .subMenu:focus { border: none; }
         #contactanos {
             border: none; 
             background-color: rgb(226, 127, 35);
@@ -60,8 +70,22 @@
             height: 28px; width: 150px;
             color: white;
         }
-        #contactanos::after {
-            background: url('<?php echo Yii::app()->theme->baseUrl;?>/img/sombra.png') 100% 0px no-repeat;
+        .contactanosDivR {
+            position: absolute;
+            height: 48px;
+            right: 0px;
+            background: url('/tours/themes/hebo/img/sombra.png') 96% 9px no-repeat;
+            top: 482px;
+            bottom: -10px;
+            left: 92px;
+            width: 172px;
+        }
+        .contactanosDivL {
+            position: relative;
+            height: 25px;
+            right: 10px;
+            background: url('/tours/themes/hebo/img/sombra.png') 5% 0px no-repeat;
+            width: 150px;
         }
         
         .font_h2 { font: normal normal normal 16px/1.4em 'open sans', sans-serif; }
@@ -145,6 +169,9 @@
             });
             $("#sobreNosotros").click(function(){
                 $("#contenido").load('home/aboutUs');
+            });
+            $("#panoramicas").click(function(){
+                $("#contenido").load('home/panoramicas');
             });
             $(".tipoExcursion").click(function(){
                 $("#contenido").load('home/tipoExcursion?idTipoExcursion='+$(this).attr("id"));
@@ -241,13 +268,15 @@
                     <input type="button" value="SOBRE NOSOTROS" id="sobreNosotros" class="subMenu"/>
                 </div>
                 <div class="thumbnail" style="padding-top: 10px;">
-                    <input type="button" value="PANORÁMICAS" id="panoramica" class="subMenu"/>
+                    <input type="button" value="PANORÁMICAS" id="panoramicas" class="subMenu"/>
                 </div>
                 <div class="thumbnail" style="padding-top: 10px;">
                     <input type="button" value="GALERÍA" id="galeria" class="subMenu"/>
                 </div>
-                <div class="thumbnail" style="padding-top: 10px;">
+                <div style="padding-top: 10px">
                     <input type="button" value="CONTÁCTANOS" id="contactanos"/>
+                    <div class="thumbnail contactanosDivL"></div>
+                    <div class="thumbnail contactanosDivR"></div>
                 </div>
             </li>
             <li class="span3" style="width: 944px;" >

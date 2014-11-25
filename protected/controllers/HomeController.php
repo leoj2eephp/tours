@@ -29,6 +29,15 @@ class HomeController extends Controller {
         $this->renderPartial("inicio");
     }
     
+    public function actionPanoramicas() {
+        $imagenesModel = Imagen::model()->findAll();
+        foreach($imagenesModel as $imagen) {
+            echo CFileHelper::getMimeType($imagen['ruta_imagen']);
+            //echo Yii::getPathOfAlias('webroot').substr($imagen['ruta_imagen'], 6).'<br />';
+        }
+        $this->renderPartial("panoramicas");//, array("tiposExcursionModel"=>$tiposExcursionModel));
+    }
+    
     public function actionAboutUs() {
         $this->renderPartial("aboutUs");
     }

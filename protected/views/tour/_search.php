@@ -30,11 +30,6 @@
 		<?php echo $form->label($model,'primera'); ?>
 		<?php echo $form->textField($model,'primera'); ?>
 	</div>
-    
-        <div class="row">
-		<?php echo $form->label($model,'tipo_excursion_id'); ?>
-		<?php echo $form->textField($model,'tipo_excursion_id'); ?>
-	</div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>

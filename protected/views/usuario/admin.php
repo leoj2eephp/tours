@@ -3,13 +3,13 @@
 /* @var $model Usuario */
 
 $this->breadcrumbs=array(
-	//'Usuarios'=>array('index'),
-	'Manage',
+    //'Usuarios'=>array('index'),
+    'Manage',
 );
 
 $this->menu=array(
-	//array('label'=>'List Usuario', 'url'=>array('index')),
-	array('label'=>'Create Usuario', 'url'=>array('create')),
+    //array('label'=>'List Usuario', 'url'=>array('index')),
+    array('label'=>'Create Usuario', 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -36,22 +36,22 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 <?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
-	'model'=>$model,
+    'model'=>$model,
 )); ?>
 </div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php
+    $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'usuario-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
 		'username',
-		'password',
 		'rol',
 		'email',
 		array(
-			'class'=>'CButtonColumn',
+                    'class'=>'CButtonColumn',
 		),
 	),
 )); ?>

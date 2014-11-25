@@ -7,12 +7,22 @@
             controlNavThumbs: true,
             directionNav: false,
         });
+        
+        $("#hdTour").click(function(){
+            $("#contenido").load('home/tipoExcursion?idTipoExcursion=1');
+        });
+        $("#fdTour").click(function(){
+            $("#contenido").load('home/tipoExcursion?idTipoExcursion=2');
+        });
+        $("#fdexTour").click(function(){
+            $("#contenido").load('home/tipoExcursion?idTipoExcursion=3');
+        });
     });
 </script>
 <ul class="thumbnails">
     <li class="span3" style="width: 16%;">
         <div style="background-color: rgba(62, 62, 62, 0.639216); color: white; width: 128px; height: 40px;">
-            <span class="font_h2 tourTitle">
+            <span class="font_h2 tourTitle" style="top: 10px;">
                 TOUR
             </span>
         </div>
@@ -24,9 +34,12 @@
     </li>
     <li class="span3" style="">
         <div class="thumbnail rightTourMenu">
-            <span class="font_h2 spanDiv">
-                TOURS | HD | FD | FD EX
+            <span class="font_h2" style="margin-right: 10px; position: relative; top: 5px;">
+                TOURS
             </span>
+            <span id="hdTour" class="font_h2 rightDaysMenus">| HD</span>
+            <span id="fdTour" class="font_h2 rightDaysMenus">| FD</span>
+            <span id="fdexTour" class="font_h2 rightDaysMenus" style="top: 5px; position: relative; padding-right: 10px;">| FD EX</span>
         </div>
     </li>
 </ul>
@@ -65,8 +78,3 @@
 <?php
     }
 ?>
-<pre>
-    <?php 
-       //print_r();
-    ?>
-</pre>
