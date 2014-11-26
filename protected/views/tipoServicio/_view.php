@@ -12,6 +12,14 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('nombre')); ?>:</b>
 	<?php echo CHtml::encode($data->nombre); ?>
 	<br />
+        
+	<b><?php echo CHtml::encode($data->getAttributeLabel('sigueA')); ?>:</b>
+	<?php echo CHtml::encode($data->sigueA); ?>
+	<br />
+        
+	<b><?php echo CHtml::encode($data->getAttributeLabel('esLugar')); ?>:</b>
+	<?php echo CHtml::encode($data->esLugar); ?>
+	<br />
 
 
 </div>

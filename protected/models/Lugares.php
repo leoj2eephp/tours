@@ -116,4 +116,23 @@ class Lugares extends CActiveRecord {
     public static function model($className=__CLASS__) {
         return parent::model($className);
     }
+    
+    public static function getFullName($tpId) {
+        $criteria = new CDbCriteria;
+        
+        $criteria->select = 't.id, concat_ws(" / ", ex.nombre, ex2.nombre, ex3.nombre, ex4.nombre, ex5.nombre) AS nombre';
+        $criteria->join = 'INNER JOIN lugar AS ex ON ex.id = t.lugar_id AND t.primera = 1 and ex.tipo_servicio_id = '.$tpId.' ';
+        $criteria->join .= 'left join lugares AS t2 ON t.lugares_id = t2.id ';
+        $criteria->join .= 'left join lugar AS ex2 ON t2.lugar_id = ex2.id ';
+        $criteria->join .= 'left join lugares AS t3 ON t2.lugares_id = t3.id ';
+        $criteria->join .= 'left join lugar AS ex3 ON t3.lugar_id = ex3.id ';
+        $criteria->join .= 'left join lugares AS t4 ON t3.lugares_id = t4.id ';
+        $criteria->join .= 'left join lugar AS ex4 ON t4.lugar_id = ex4.id ';
+        $criteria->join .= 'left join lugares AS t5 ON t4.lugares_id = t5.id ';
+        $criteria->join .= 'left join lugar AS ex5 ON t5.lugar_id = ex5.id ';
+        $criteria->condition = 't.primera = 1';
+        $criteria->order = 't.id';
+        
+        return Lugares::model()->findAll($criteria);
+    }
 }

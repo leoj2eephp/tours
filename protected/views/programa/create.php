@@ -8,11 +8,29 @@
         }
     </style>
     <script>
+        var paxArray = [4,5,6,7,8,9,10,11,12];
         $(document).ready(function(){
             $("#CotizacionForm_fecha_inicio").change(function(){
                 var thisDate = convertDateEsToEn($(this).val(), 2);
                 $("#CotizacionForm_fecha_termino").datepicker("option", "minDate", thisDate);
             });
+            
+            $("#paxMin").change(function(){
+                valorMin = $(this).val();
+                $("#paxMax>option").remove();
+                $(paxArray).each(function(i,o){
+                    if(o >= parseInt(valorMin)) {
+                        var option = document.createElement("option");
+                        option.text = o;
+                        option.value = o;
+                        document.getElementById("paxMax").add(option);
+                    }
+                });
+                $("#paxMax>option").each(function(i,o){
+                    if(parseInt(o.value) > parseInt(valorMin))
+                        console.log(o.value+' '+valorMin);
+                });
+            })
         });
     </script>
 </head>
@@ -58,14 +76,18 @@
         <td><?php echo CHtml::error($model,'pais_id'); ?></td>
     </tr>
     <tr class="row">
-        <td><?php echo CHtml::activeLabel($model,'De'); ?></td>
-        <td><?php echo CHtml::activeDropDownList($model,'pax_min',$rangoPax,array('id'=>'paxMin', 'style'=>'width: 50px;')); ?></td>
-        <td><?php echo CHtml::error($model,'pax_min'); ?></td>
-    </tr>
-    <tr class="row">
-        <td><?php echo CHtml::activeLabel($model,'Hasta'); ?></td>
-        <td><?php echo CHtml::activeDropDownList($model,'pax_max',$rangoPax,array('id'=>'paxMax', 'style'=>'width: 50px;')); ?></td>
-        <td><?php echo CHtml::error($model,'pax_max'); ?></td>
+        <td colspan="3">
+            <table>
+                <tr class="row">
+                    <td><?php echo CHtml::activeLabel($model,'Desde'); ?></td>
+                    <td><?php echo CHtml::activeDropDownList($model,'pax_min',$rangoPax,array('id'=>'paxMin', 'style'=>'width: 50px;')); ?></td>
+                    <td><?php echo CHtml::error($model,'pax_min'); ?></td>
+                    <td><?php echo CHtml::activeLabel($model,'Hasta'); ?></td>
+                    <td><?php echo CHtml::activeDropDownList($model,'pax_max',$rangoPax,array('id'=>'paxMax', 'style'=>'width: 50px;')); ?></td>
+                    <td><?php echo CHtml::error($model,'pax_max'); ?></td>
+                </tr>
+            </table>
+        </td>
     </tr>
     <tr class="row">
         <td><?php echo CHtml::activeLabel($model,'tipoMoneda'); ?></td>

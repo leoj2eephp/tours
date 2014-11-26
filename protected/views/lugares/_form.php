@@ -137,13 +137,13 @@
                                     echo $form->hiddenField($model, '['.$index.']primera', array("value"=>"0"));
                             ?>
                         </td>
-                <?php   if($first) {
+                <?php   if($first && $model->lugars->tipoServicio->sigueA != 0) {
                             echo '<td>';
                             echo CHtml::button('',array("class"=>"addButton",
                                 'style'=>'border: none; background: url('.Yii::app()->request->baseUrl.'/images/add_button.png) no-repeat;'
                                 . 'padding-bottom: 38px; width: 52px;'));
                             echo '</td>';
-                        } else { ?>
+                        } else if(!$first){ ?>
                         <td>
                             <div style="float: left;">
                                 <input type="button" value="" class="addButton" onClick="addButton();" style="border: none; 

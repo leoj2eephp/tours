@@ -35,8 +35,7 @@ class ProgramaController extends Controller {
         //$rangoPax = array(4=>4,5=>5,6=>6,7=>7);
         if(isset($_POST['Programa'])) {
             $model->attributes = $_POST['Programa'];
-            //$modelCotizante->attributes = $_POST['CotizacionForm'];
-            if($model->validate()) { // && $modelCotizante->validate()) {
+            if($model->validate()) {
                 $myDateTime1 = DateTime::createFromFormat('d/m/Y', $model->fecha);
                 $model->fecha = $myDateTime1->format('Y-m-d');
                 /*$myDateTime2 = DateTime::createFromFormat('d/m/Y', $model->fecha_inicio);
@@ -71,7 +70,7 @@ class ProgramaController extends Controller {
             $valid = true;
             foreach ($_POST['Servicio'] as $j=>$postModel) {
                 if (isset($_POST['Servicio'][$j])) {
-                    $servicioModel = new Servicio; // if you had static model only
+                    $servicioModel = new Servicio;
                     $servicioModel->attributes=$postModel;
                     $valid=$servicioModel->validate() && $valid;
                     if($valid) {
@@ -105,7 +104,12 @@ class ProgramaController extends Controller {
     public function actionGetLugaresAjax() {
         $id = $_POST['idTipoServicio'];
         $index = $_POST['index'];
-        $lista = Tour::model()->findAll('tipo_servicio_id = :servicioId',array(':servicioId'=>$id));
+        //$lista = Tour::model()->findAll('tipo_servicio_id = :servicioId',array(':servicioId'=>$id));
+        $lugar = TipoServicio::model()->findByPk($id);
+        if($lugar->sigueA)
+            $lista = Lugares::getFullName($id);
+        else
+            $lista = Lugar::model()->findAll('tipo_servicio_id = :tsId', array(':tsId'=>$id));
         $lista = CHtml::listData($lista, 'id', 'nombre');
         foreach($lista as $dato => $nombre) {
             echo CHtml::tag('option',array('value'=>$dato),CHtml::encode($nombre),true);

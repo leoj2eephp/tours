@@ -19,7 +19,7 @@
             var date = t.datepicker('getDate');
             index = t.parent().parent().attr('index');
             $("#dia_"+index).val(arrayDays[date.getUTCDay()]);
-            $("input[name='Servicio["+index+"][dia_semana]']").val(date.getUTCDay());
+            $("input[name='ServicioPrograma["+index+"][dia_semana]']").val(date.getUTCDay());
         }
         
         function addButton(){
@@ -27,12 +27,11 @@
             <?php //$model[] = new Servicio; ?>
             lastRow = parseInt($("#tablaServicios tr[index]:last").attr("index")) + 1;
             html = '<tr class="row" index='+lastRow+'>';
-            html += '<td><input type="text" class="datepicker" name="Servicio['+lastRow+'][fecha]" style="width: 74px;" onChange="getDayOfTheWeek($(this))"></td>';
+            html += '<td><input type="text" class="datepicker" name="ServicioPrograma['+lastRow+'][fecha]" style="width: 74px;" onChange="getDayOfTheWeek($(this))"></td>';
             html += '<td><input type="text" id="dia_'+lastRow+'" disabled="disabled" style="width: 85px;">';
-            html += '<input type="hidden" name="Servicio['+lastRow+'][dia_semana]" /></td>';
-            html += '<td><input type="text" name="Servicio['+lastRow+'][hora]" class="datetimepicker" style="width: 72px;"/></td>';
-            html += '<td><input type="text" name="Servicio['+lastRow+'][n_personas]" style="width: 56px;"/></td>';
-            html += '<td><select name="Servicio['+lastRow+'][tipo_servicio_id]" style="width: 125px;" class="ajaxLugares">\n\
+            html += '<input type="hidden" name="ServicioPrograma['+lastRow+'][dia_semana]" /></td>';
+            html += '<td><input type="text" name="ServicioPrograma['+lastRow+'][hora]" class="datetimepicker" style="width: 72px;"/></td>';
+            html += '<td><select name="ServicioPrograma['+lastRow+'][tipo_servicio_id]" style="width: 125px;" class="ajaxLugares">\n\
                         <option value="">Seleccione</option>';
             <?php
                 foreach($tiposServicio as $valor => $dato) {
@@ -40,9 +39,9 @@
                 }
             ?>
             html += '</select></td>';
-            html += '<td><select name="Servicio['+lastRow+'][lugar_id]" id="lugarId_'+lastRow+'" style="width: 150px;"></select></td>';
-            html += '<td><select name="Servicio['+lastRow+'][entrada]" style="width: 56px;"><option value="0">No</option><option value="1">Sí</option></select></td>';
-            html += '<td><select name="Servicio['+lastRow+'][idioma_guia_id]" style="width: 110px;">\n\
+            html += '<td><select name="ServicioPrograma['+lastRow+'][lugar_id]" id="lugarId_'+lastRow+'" style="width: 150px;"></select></td>';
+            html += '<td><select name="ServicioPrograma['+lastRow+'][entrada]" style="width: 56px;"><option value="0">No</option><option value="1">Sí</option></select></td>';
+            html += '<td><select name="ServicioPrograma['+lastRow+'][idioma_guia_id]" style="width: 110px;">\n\
                         <option value="">Seleccione</option>';
             <?php
                 foreach($idiomas as $valor => $dato) {
@@ -50,14 +49,14 @@
                 }
             ?>
             html += '</select></td>';
-            html += '<td><select name="Servicio['+lastRow+'][extras][]" multiple="multiple" style="width: 110px; height: 56px;">';
+            html += '<td><select name="ServicioPrograma['+lastRow+'][extras][]" multiple="multiple" style="width: 110px; height: 56px;">';
             <?php
                 foreach($extras as $valor => $dato) {
                     echo 'html += "<option value='.$valor.'>'.$dato.'</option>";';
                 }
             ?>
             html += '</select></td>';
-            html += '<td><input type="text" name="Servicio['+lastRow+'][valor]" style="width: 74px;"/></td>';
+            //html += '<td><input type="text" name="ServicioPrograma['+lastRow+'][valor]" style="width: 74px;"/></td>';
             html += '<td><div style="float: left;"><input type="button" value="" class="addButton" onClick="addButton()" style="border: none; \n\
                 background: url('+baseURL+'/images/add_button_min.png)no-repeat;padding-bottom: 11px; width: 23px;"/></div>\n\
                     <div style="float: left;"><input type="button" value="" class="removeButton" onClick="removeButton($(this))" style="border: none; \n\
@@ -80,7 +79,7 @@
             $(".ajaxLugares").change(function(){
                 $index = $(this).parent().parent().attr("index");
                 $.ajax({
-                    url: '/tours/index.php/cotizacion/getLugaresAjax',
+                    url: '/tours/index.php/programa/getLugaresAjax',
                     type: 'POST',
                     data: "idTipoServicio="+$(this).val()+"&index="+$index,
                     dataType: 'html',
@@ -178,7 +177,7 @@
                 array(
                     'ajax' => array(
                         'type'=>'POST', //request type
-                        'url'=>CController::createUrl('cotizacion/getLugaresAjax'),
+                        'url'=>CController::createUrl('programa/getLugaresAjax'),
                         'data'=>array('idTipoServicio'=>'js:$(this).val()','index'=>'js:$(this).parent().parent().attr("index")'),
                         'update'=>'#lugarId_0',
                     ),

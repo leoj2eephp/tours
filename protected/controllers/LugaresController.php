@@ -80,7 +80,7 @@ class LugaresController extends Controller {
             $this->redirect(array('admin'));
         }
 
-        $modelTipoServicio= TipoServicio::model()->findAll();
+        $modelTipoServicio= TipoServicio::model()->findAll('sigueA = :si and esLugar = :si', array(':si'=>1));
         $tipoServicioList = CHtml::listData($modelTipoServicio, 'id', 'nombre');
         $modelLugars = Lugar::model()->findAll('tipo_servicio_id = :servicioId',array(':servicioId'=>key($tipoServicioList)));
         $lugars = CHtml::listData($modelLugars, 'id', 'nombre');
@@ -104,7 +104,7 @@ class LugaresController extends Controller {
                 $this->redirect(array('view','id'=>$model->id));
         }
 
-        $modelTipoServicio= TipoServicio::model()->findAll();
+        $modelTipoServicio= TipoServicio::model()->findAll('sigueA = :si and esLugar = :si', array(':si'=>1));
         $tipoServicioList = CHtml::listData($modelTipoServicio, 'id', 'nombre');
         $modelLugars = Lugar::model()->findAll('tipo_servicio_id = :tsi', array(':tsi'=>$model->lugars->tipo_servicio_id));
         $lugars = CHtml::listData($modelLugars, 'id', 'nombre');
@@ -140,7 +140,7 @@ class LugaresController extends Controller {
      */
     public function actionAdmin() {
         $model=new Lugares('search');
-        $model->unsetAttributes();  // clear any default values
+        $model->unsetAttributes();
         if(isset($_GET['Lugares']))
             $model->attributes=$_GET['Lugares'];
 
@@ -157,7 +157,7 @@ class LugaresController extends Controller {
      * @throws CHttpException
      */
     public function loadModel($id) {
-        $model=Lugares::model()->with("lugars")->findByPk($id);
+        $model=Lugares::model()->with("lugars", "lugars.tipoServicio")->findByPk($id);
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');
         return $model;
