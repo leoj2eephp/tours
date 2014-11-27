@@ -9,10 +9,6 @@
 	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('tour_id')); ?>:</b>
-	<?php echo CHtml::encode($data->tour_id); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('excursion.nombre')); ?>:</b>
 	<?php echo CHtml::encode($data->excursion_id); ?>
 	<br />

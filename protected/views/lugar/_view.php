@@ -21,4 +21,8 @@
     <?php echo CHtml::encode($data->tipo_servicio_id); ?>
     <br />
 
+    <b><?php echo CHtml::encode($data->getAttributeLabel('valor')); ?>:</b>
+    <?php echo CHtml::encode($data->valor); ?>
+    <br />
+
 </div>

@@ -8,6 +8,7 @@
  * @property integer $lugares_id
  * @property integer $lugar_id
  * @property integer $primera
+ * @property double $valor
  */
 class Lugares extends CActiveRecord {
     
@@ -28,10 +29,10 @@ class Lugares extends CActiveRecord {
         // will receive user inputs.
         return array(
             //array('lugar_id, primera', 'required'),
-            array('lugares_id, lugar_id, primera', 'numerical', 'integerOnly'=>true),
+            array('lugares_id, lugar_id, primera, valor', 'numerical', 'integerOnly'=>true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, lugares_id, lugar_id, primera', 'safe', 'on'=>'search'),
+            array('id, lugares_id, lugar_id, primera, valor', 'safe', 'on'=>'search'),
         );
     }
 
@@ -84,8 +85,9 @@ class Lugares extends CActiveRecord {
         
         $criteria->compare('t.id',$this->id);
         $criteria->compare('nombre',$this->nombre);
+        $criteria->compare('valor',$this->valor);
         
-        $criteria->select = 't.id, concat_ws(" / ", ex.nombre, ex2.nombre, ex3.nombre, ex4.nombre, ex5.nombre) AS nombre';
+        $criteria->select = 't.id, concat_ws(" / ", ex.nombre, ex2.nombre, ex3.nombre, ex4.nombre, ex5.nombre) AS nombre, t.valor';
         $criteria->join = 'INNER JOIN lugar AS ex ON ex.id = t.lugar_id AND t.primera = 1 ';
         $criteria->join .= 'left join lugares AS t2 ON t.lugares_id = t2.id ';
         $criteria->join .= 'left join lugar AS ex2 ON t2.lugar_id = ex2.id ';

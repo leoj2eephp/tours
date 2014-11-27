@@ -6,6 +6,8 @@
  * The followings are the available columns in table 'lugar':
  * @property integer $id
  * @property string $nombre
+ * @property string $tipo_servicio_id
+ * @property double $valor
  *
  * The followings are the available model relations:
  * @property Servicio[] $servicios
@@ -25,11 +27,12 @@ class Lugar extends CActiveRecord {
             // NOTE: you should only define rules for those attributes that
             // will receive user inputs.
             return array(
-                    array('nombre, tipo_servicio_id', 'required'),
-                    array('nombre', 'length', 'max'=>100),
-                    // The following rule is used by search().
-                    // @todo Please remove those attributes that should not be searched.
-                    array('id, nombre, tipo_servicio_id', 'safe', 'on'=>'search'),
+                array('nombre, tipo_servicio_id', 'required'),
+                array('valor', 'numerical', 'integerOnly'=>true),
+                array('nombre', 'length', 'max'=>100),
+                // The following rule is used by search().
+                // @todo Please remove those attributes that should not be searched.
+                array('id, nombre, tipo_servicio_id, valor', 'safe', 'on'=>'search'),
             );
 	}
 

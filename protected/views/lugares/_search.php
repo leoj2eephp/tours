@@ -12,23 +12,24 @@
 )); ?>
 
 	<div class="row">
-		<?php echo $form->label($model,'id'); ?>
-		<?php echo $form->textField($model,'id'); ?>
+            <?php echo $form->label($model,'id'); ?>
+            <?php echo $form->textField($model,'id'); ?>
 	</div>
-
 	<div class="row">
-		<?php echo $form->label($model,'lugares_id'); ?>
-		<?php echo $form->textField($model,'lugares_id'); ?>
+            <?php echo $form->label($model,'lugares_id'); ?>
+            <?php echo $form->textField($model,'lugares_id'); ?>
 	</div>
-
 	<div class="row">
-		<?php echo $form->label($model,'lugar_id'); ?>
-		<?php echo $form->textField($model,'lugar_id'); ?>
+            <?php echo $form->label($model,'lugar_id'); ?>
+            <?php echo $form->textField($model,'lugar_id'); ?>
 	</div>
-
 	<div class="row">
-		<?php echo $form->label($model,'primera'); ?>
-		<?php echo $form->textField($model,'primera'); ?>
+            <?php echo $form->label($model,'primera'); ?>
+            <?php echo $form->textField($model,'primera'); ?>
+	</div>
+        <div class="row">
+            <?php echo $form->label($model,'valor'); ?>
+            <?php echo $form->textField($model,'valor',array('size'=>60,'maxlength'=>100)); ?>
 	</div>
 
 	<div class="row buttons">

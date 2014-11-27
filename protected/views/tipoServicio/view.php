@@ -27,9 +27,5 @@ $this->menu=array(
                 'name'=>'sigueA',
                 'value'=>$model->sigueA == 0 ? "NO" : "SI",
             ),
-            array(            // display 'create_time' using an expression
-                'name'=>'esLugar',
-                'value'=>$model->esLugar == 0 ? "NO" : "SI",
-            ),
 	),
 )); ?>

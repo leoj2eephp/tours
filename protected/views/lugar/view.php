@@ -23,6 +23,7 @@ $this->menu=array(
 	'attributes'=>array(
 		'id',
 		'nombre',
+		'valor',
 		'tipoServicio.nombre',
 	),
 )); ?>

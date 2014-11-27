@@ -20,13 +20,18 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'nombre'); ?>
-		<?php echo $form->textField($model,'nombre',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'nombre'); ?>
+            <?php echo $form->labelEx($model,'nombre'); ?>
+            <?php echo $form->textField($model,'nombre',array('size'=>45,'maxlength'=>45)); ?>
+            <?php echo $form->error($model,'nombre'); ?>
 	</div>
-
+        <div class="row">
+            <?php echo $form->labelEx($model,'valor'); ?>
+            <?php echo $form->textField($model,'valor',array('size'=>45,'maxlength'=>45)); ?>
+            <?php echo $form->error($model,'valor'); ?>
+	</div>
+        
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+            <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

@@ -21,7 +21,6 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		'tour_id',
 		'excursions.nombre',
 		//'primera',
                 'tipoExcursion.nombre',

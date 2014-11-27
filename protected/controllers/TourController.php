@@ -94,9 +94,25 @@ class TourController extends Controller {
     public function actionUpdate($id) {
         $model=$this->loadModel($id);
         if(isset($_POST['Tour'])) {
-            $model->attributes=$_POST['Tour'];
-            if($model->save())
-                $this->redirect(array('view','id'=>$model->id));
+            $idsArray = array();
+            Yii::app()->db->createCommand('CALL deleteTour('.$id.')')->execute();
+            foreach ($_POST['Tour'] as $j=>$postModel) {
+                if (isset($_POST['Tour'][$j])) {
+                    $tourModel = new Tour;
+                    $tourModel->attributes=$postModel;
+                    if($tourModel->save())
+                        $idsArray[] = $tourModel->id;
+                }
+            }
+            $first = true;
+            foreach (array_reverse($idsArray) as $dato) {
+                if(!$first) {
+                    Tour::model()->updateByPk($dato, array('tour_id'=>$aux));
+                }
+                $aux = $dato;
+                $first = false;
+            }
+            $this->redirect(array('admin'));
         }
         
         $modelTipoExcursion = TipoExcursion::model()->findAll();
@@ -112,13 +128,12 @@ class TourController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id)
-    {
-            $this->loadModel($id)->delete();
+    public function actionDelete($id) {
+        $this->loadModel($id)->delete();
 
-            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-            if(!isset($_GET['ajax']))
-                    $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        if(!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
     /**

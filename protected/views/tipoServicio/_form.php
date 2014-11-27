@@ -29,11 +29,6 @@
             <?php echo $form->dropDownList($model,'sigueA',array(0=>'NO', 1=>'SÍ')); ?>
             <?php echo $form->error($model,'sigueA'); ?>
 	</div>
-        <div class="row">
-            <?php echo $form->labelEx($model,'esLugar'); ?>
-            <?php echo $form->dropDownList($model,'esLugar',array(0=>'NO', 1=>'SÍ')); ?>
-            <?php echo $form->error($model,'esLugar'); ?>
-	</div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

@@ -100,6 +100,16 @@
             }
             ?>
 	</div>
+        <table>
+            <tr>
+                <td>
+                    <?php echo $form->labelEx($model,'valor'); ?>
+                </td>
+                <td style="padding: 15px 0px 0px 24px;">
+                    <?php echo $form->textField($model, '[0]valor', array('size'=>45,'maxlength'=>45)); ?>
+                </td>
+            </tr>
+        </table>
         
         <table id="creaLugares">
         <?php

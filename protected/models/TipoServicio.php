@@ -7,7 +7,6 @@
  * @property integer $id
  * @property string $nombre
  * @property boolean $sigueA
- * @property boolean $esLugar
  *
  * The followings are the available model relations:
  * @property Servicio[] $servicios
@@ -27,11 +26,11 @@ class TipoServicio extends CActiveRecord {
             // NOTE: you should only define rules for those attributes that
             // will receive user inputs.
             return array(
-                    array('nombre, sigueA, esLugar', 'required'),
+                    array('nombre, sigueA', 'required'),
                     array('nombre', 'length', 'max'=>100),
                     // The following rule is used by search().
                     // @todo Please remove those attributes that should not be searched.
-                    array('id, nombre, sigueA, esLugar', 'safe', 'on'=>'search'),
+                    array('id, nombre, sigueA', 'safe', 'on'=>'search'),
             );
 	}
 
@@ -54,7 +53,7 @@ class TipoServicio extends CActiveRecord {
                 'id' => 'ID',
                 'nombre' => 'Servicio',
                 'sigueA' => 'Sigue a otro ítem?',
-                'esLugar' => 'Es un lugar?',
+                //'esLugar' => 'Es un lugar?',
             );
 	}
 
@@ -78,7 +77,6 @@ class TipoServicio extends CActiveRecord {
             $criteria->compare('id',$this->id);
             $criteria->compare('nombre',$this->nombre,true);
             $criteria->compare('sigueA',$this->sigueA,true);
-            $criteria->compare('esLugar',$this->esLugar,true);
 
             return new CActiveDataProvider($this, array(
                 'criteria'=>$criteria,

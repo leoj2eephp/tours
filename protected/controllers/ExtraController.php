@@ -75,23 +75,21 @@ class ExtraController extends Controller {
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
+	public function actionUpdate($id) {
+            $model=$this->loadModel($id);
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+            // Uncomment the following line if AJAX validation is needed
+            // $this->performAjaxValidation($model);
 
-		if(isset($_POST['Extra']))
-		{
-			$model->attributes=$_POST['Extra'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
+            if(isset($_POST['Extra'])) {
+                $model->attributes=$_POST['Extra'];
+                if($model->save())
+                    $this->redirect(array('view','id'=>$model->id));
+            }
 
-		$this->render('update',array(
-			'model'=>$model,
-		));
+            $this->render('update',array(
+                'model'=>$model,
+            ));
 	}
 
 	/**

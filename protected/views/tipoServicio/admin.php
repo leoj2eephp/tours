@@ -52,10 +52,6 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
                 'name'=>'sigueA',
                 'value'=>'$data->sigueA == 0 ? "NO" : "SI"',
             ),
-            array(            // display 'create_time' using an expression
-                'name'=>'sigueA',
-                'value'=>'$data->esLugar == 0 ? "NO" : "SI"',
-            ),
             array(
                 'class'=>'CButtonColumn',
             ),

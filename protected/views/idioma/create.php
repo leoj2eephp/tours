@@ -8,8 +8,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	//array('label'=>'List Idioma', 'url'=>array('index')),
-	array('label'=>'Manage Idioma', 'url'=>array('admin')),
+    //array('label'=>'List Idioma', 'url'=>array('index')),
+    array('label'=>'Manage Idioma', 'url'=>array('admin')),
 );
 ?>
 

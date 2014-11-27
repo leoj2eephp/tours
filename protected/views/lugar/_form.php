@@ -16,15 +16,19 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'nombre'); ?>
-		<?php echo $form->textField($model,'nombre',array('size'=>60,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'nombre'); ?>
+            <?php echo $form->labelEx($model,'nombre'); ?>
+            <?php echo $form->textField($model,'nombre',array('size'=>60,'maxlength'=>100)); ?>
+            <?php echo $form->error($model,'nombre'); ?>
 	</div>
-
 	<div class="row">
-		<?php echo $form->labelEx($model,'tipo_servicio_id'); ?>
-		<?php echo $form->dropDownList($model,'tipo_servicio_id',$tipoServicios); ?>
-		<?php echo $form->error($model,'tipo_servicio_id'); ?>
+            <?php echo $form->labelEx($model,'tipo_servicio_id'); ?>
+            <?php echo $form->dropDownList($model,'tipo_servicio_id',$tipoServicios); ?>
+            <?php echo $form->error($model,'tipo_servicio_id'); ?>
+	</div>
+        <div class="row">
+            <?php echo $form->labelEx($model,'valor'); ?>
+            <?php echo $form->textField($model,'valor',array('size'=>45,'maxlength'=>45)); ?>
+            <?php echo $form->error($model,'valor'); ?>
 	</div>
 
 	<div class="row buttons">

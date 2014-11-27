@@ -42,11 +42,10 @@ class LugaresController extends Controller {
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id)
-    {
-            $this->render('view',array(
-                    'model'=>$this->loadModel($id),
-            ));
+    public function actionView($id) {
+        $this->render('view',array(
+            'model'=>$this->loadModel($id),
+        ));
     }
 
     /**
@@ -80,7 +79,7 @@ class LugaresController extends Controller {
             $this->redirect(array('admin'));
         }
 
-        $modelTipoServicio= TipoServicio::model()->findAll('sigueA = :si and esLugar = :si', array(':si'=>1));
+        $modelTipoServicio= TipoServicio::model()->findAll('sigueA = :si', array(':si'=>1));
         $tipoServicioList = CHtml::listData($modelTipoServicio, 'id', 'nombre');
         $modelLugars = Lugar::model()->findAll('tipo_servicio_id = :servicioId',array(':servicioId'=>key($tipoServicioList)));
         $lugars = CHtml::listData($modelLugars, 'id', 'nombre');
@@ -94,17 +93,29 @@ class LugaresController extends Controller {
      */
     public function actionUpdate($id) {
         $model=$this->loadModel($id);
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if(isset($_POST['Lugares'])) {
-            $model->attributes=$_POST['Lugares'];
-            if($model->save())
-                $this->redirect(array('view','id'=>$model->id));
+            $idsArray = array();
+            Yii::app()->db->createCommand('CALL deleteLugares('.$id.')')->execute();
+            foreach ($_POST['Lugares'] as $j=>$postModel) {
+                if (isset($_POST['Lugares'][$j])) {
+                    $lugaresModel = new Lugares;
+                    $lugaresModel->attributes=$postModel;
+                    if($lugaresModel->save())
+                        $idsArray[] = $lugaresModel->id;
+                }
+            }
+            $first = true;
+            foreach (array_reverse($idsArray) as $dato) {
+                if(!$first) {
+                    Lugares::model()->updateByPk($dato, array('lugares_id'=>$aux));
+                }
+                $aux = $dato;
+                $first = false;
+            }
+            $this->redirect(array('admin'));
         }
 
-        $modelTipoServicio= TipoServicio::model()->findAll('sigueA = :si and esLugar = :si', array(':si'=>1));
+        $modelTipoServicio= TipoServicio::model()->findAll('sigueA = :si', array(':si'=>1));
         $tipoServicioList = CHtml::listData($modelTipoServicio, 'id', 'nombre');
         $modelLugars = Lugar::model()->findAll('tipo_servicio_id = :tsi', array(':tsi'=>$model->lugars->tipo_servicio_id));
         $lugars = CHtml::listData($modelLugars, 'id', 'nombre');

@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'detalle_servicio':
  * @property integer $id
  * @property string $nombre
+ * @property string $valor
  *
  * The followings are the available model relations:
  * @property ArrivoCjc[] $arrivoCjcs
@@ -27,10 +28,11 @@ class DetalleServicio extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('nombre', 'required'),
+            array('valor', 'numerical', 'integerOnly'=>true),
             array('nombre', 'length', 'max'=>100),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, nombre', 'safe', 'on'=>'search'),
+            array('id, nombre, valor', 'safe', 'on'=>'search'),
         );
     }
 

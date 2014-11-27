@@ -3,16 +3,14 @@
 /* @var $model Lugares */
 
 $this->breadcrumbs=array(
-	'Lugares'=>array('index'),
-	$model->id,
+    $model->id,
 );
 
 $this->menu=array(
-	array('label'=>'List Lugares', 'url'=>array('index')),
-	array('label'=>'Create Lugares', 'url'=>array('create')),
-	array('label'=>'Update Lugares', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete Lugares', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Lugares', 'url'=>array('admin')),
+    array('label'=>'Create Lugares', 'url'=>array('create')),
+    array('label'=>'Update Lugares', 'url'=>array('update', 'id'=>$model->id)),
+    array('label'=>'Delete Lugares', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+    array('label'=>'Manage Lugares', 'url'=>array('admin')),
 );
 ?>
 
@@ -21,10 +19,10 @@ $this->menu=array(
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'id',
-		'lugares_id',
-                'lugars.nombre',
-                'lugars.tipoServicio.nombre',
+            'id',
+            'lugars.nombre',
+            'lugars.tipoServicio.nombre',
+            'valor',
 		//'lugar_id',
 		//'primera',
 	),

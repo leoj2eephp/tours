@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'idioma':
  * @property integer $id
  * @property string $nombre
+ * @property double $valor
  *
  * The followings are the available model relations:
  * @property ArrivoCjc[] $arrivoCjcs
@@ -24,15 +25,16 @@ class Idioma extends CActiveRecord {
      * @return array validation rules for model attributes.
      */
     public function rules() {
-            // NOTE: you should only define rules for those attributes that
-            // will receive user inputs.
-            return array(
-                    array('nombre', 'required'),
-                    array('nombre', 'length', 'max'=>100),
-                    // The following rule is used by search().
-                    // @todo Please remove those attributes that should not be searched.
-                    array('id, nombre', 'safe', 'on'=>'search'),
-            );
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('nombre', 'required'),
+            array('valor', 'numerical', 'integerOnly'=>true),
+            array('nombre', 'length', 'max'=>100),
+            // The following rule is used by search().
+            // @todo Please remove those attributes that should not be searched.
+            array('id, nombre, valor', 'safe', 'on'=>'search'),
+        );
     }
 
     /**
