@@ -27,5 +27,6 @@ $this->menu=array(
                 'name'=>'sigueA',
                 'value'=>$model->sigueA == 0 ? "NO" : "SI",
             ),
+            'valor',
 	),
 )); ?>

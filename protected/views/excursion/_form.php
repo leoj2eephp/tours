@@ -56,11 +56,20 @@
         <?php echo $form->textField($model,'nombre',array('size'=>60,'maxlength'=>100)); ?>
         <?php echo $form->error($model,'nombre'); ?>
     </div>
-
+    <div class="row">
+        <?php echo $form->labelEx($model,'tipo_servicio_id'); ?>
+        <?php echo $form->dropDownList($model,'tipo_servicio_id',$tipoServicios); ?>
+        <?php echo $form->error($model,'tipo_servicio_id'); ?>
+    </div>
     <div class="row">
         <?php echo $form->labelEx($model,'descripcion'); ?>
         <?php echo $form->textArea($model,'descripcion',array('rows'=>6, 'cols'=>150, 'style'=>'width: 605px;')); ?>
         <?php echo $form->error($model,'descripcion'); ?>
+    </div>
+    <div class="row">
+        <?php echo $form->labelEx($model,'valor'); ?>
+        <?php echo $form->textField($model,'valor',array('rows'=>6, 'cols'=>150, 'style'=>'width: 105px;')); ?>
+        <?php echo $form->error($model,'valor'); ?>
     </div>
     
     <!--<ul class="thumbnails">

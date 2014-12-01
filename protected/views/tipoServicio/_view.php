@@ -16,5 +16,9 @@
     <b><?php echo CHtml::encode($data->getAttributeLabel('sigueA')); ?>:</b>
     <?php echo CHtml::encode($data->sigueA); ?>
     <br />
+    
+    <b><?php echo CHtml::encode($data->getAttributeLabel('valor')); ?>:</b>
+    <?php echo CHtml::encode($data->valor); ?>
+    <br />
         
 </div>

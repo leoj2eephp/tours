@@ -9,6 +9,7 @@
  * @property integer $excursion_id
  * @property integer $primera
  * @property integer $tipo_excursion_id
+ * @property double $valor
  */
 class Tour extends CActiveRecord {
     
@@ -29,10 +30,10 @@ class Tour extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('primera, excursion_id', 'required'),
-            array('tour_id, excursion_id, tipo_excursion_id', 'numerical', 'integerOnly'=>true),
+            array('tour_id, excursion_id, tipo_excursion_id, valor', 'numerical', 'integerOnly'=>true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, tour_id, excursion_id, primera, tipo_excursion_id', 'safe', 'on'=>'search'),
+            array('id, tour_id, excursion_id, primera, tipo_excursion_id, valor', 'safe', 'on'=>'search'),
         );
     }
 
@@ -59,6 +60,7 @@ class Tour extends CActiveRecord {
             'primera' => 'Primera',
             'nombre' => 'Tours',
             'tipo_excursion_id' => 'Tipo Excursión',
+            'valor' => 'Precio',
         );
     }
 
@@ -81,13 +83,14 @@ class Tour extends CActiveRecord {
             //$criteria->with = array('excursions');
             $criteria->compare('t.id',$this->id);
             $criteria->compare('nombre',$this->nombre);
+            $criteria->compare('valor',$this->valor);
             //$criteria->compare('tipo_excursion_id',$this->tipo_excursion_id);
             /*$criteria->compare('tour_id',$this->tour_id);
             $criteria->compare('excursion_id',$this->excursion_id);
             $criteria->compare('primera',$this->primera);*/
             //$criteria->together = true;
             
-            $criteria->select = 't.id, concat_ws(" / ", ex.nombre, ex2.nombre, ex3.nombre, ex4.nombre, ex5.nombre) AS nombre';
+            $criteria->select = 't.id, concat_ws(" / ", ex.nombre, ex2.nombre, ex3.nombre, ex4.nombre, ex5.nombre) AS nombre, t.valor';
             $criteria->join = 'INNER JOIN excursion AS ex ON ex.id = t.excursion_id AND t.primera = 1 ';
             $criteria->join .= 'left join tour AS t2 ON t.tour_id = t2.id ';
             $criteria->join .= 'left join excursion AS ex2 ON t2.excursion_id = ex2.id ';
@@ -132,6 +135,25 @@ class Tour extends CActiveRecord {
         $criteria->order = 't.id';
         
         return Tour::model()->findByPk($id, $criteria);
+    }
+    
+    public static function getFullNameAll($tpId) {
+        $criteria = new CDbCriteria;
+        
+        $criteria->select = 't.id, concat_ws(" / ", ex.nombre, ex2.nombre, ex3.nombre, ex4.nombre, ex5.nombre) AS nombre, t.valor';
+        $criteria->join = 'INNER JOIN excursion AS ex ON ex.id = t.excursion_id AND t.primera = 1 and ex.tipo_servicio_id = '.$tpId.' ';
+        $criteria->join .= 'left join tour AS t2 ON t.tour_id = t2.id ';
+        $criteria->join .= 'left join excursion AS ex2 ON t2.excursion_id = ex2.id ';
+        $criteria->join .= 'left join tour AS t3 ON t2.tour_id = t3.id ';
+        $criteria->join .= 'left join excursion AS ex3 ON t3.excursion_id = ex3.id ';
+        $criteria->join .= 'left join tour AS t4 ON t3.tour_id = t4.id ';
+        $criteria->join .= 'left join excursion AS ex4 ON t4.excursion_id = ex4.id ';
+        $criteria->join .= 'left join tour AS t5 ON t4.tour_id = t5.id ';
+        $criteria->join .= 'left join excursion AS ex5 ON t5.excursion_id = ex5.id ';
+        $criteria->condition = 't.primera = 1';
+        $criteria->order = 't.id';
+        
+        return Tour::model()->findAll($criteria);
     }
     
 }

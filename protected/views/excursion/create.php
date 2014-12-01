@@ -13,4 +13,4 @@ $this->menu=array(
 
 <h1>Create Excursion</h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model,'excursionList'=>$excursionList,)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model,'excursionList'=>$excursionList,'tipoServicios'=>$tipoServicios,)); ?>

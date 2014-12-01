@@ -11,7 +11,7 @@
  * @property string $hora
  * @property integer $n_personas
  * @property integer $tipo_servicio_id
- * @property integer $lugar_id
+ * @property integer $excursion_id
  * @property integer $entrada
  * @property integer $idioma_guia_id
  * @property double $valor
@@ -38,14 +38,14 @@ class Servicio extends CActiveRecord {
             // NOTE: you should only define rules for those attributes that
             // will receive user inputs.
             return array(
-                array('fecha, n_personas, tipo_servicio_id, lugar_id, idioma_guia_id, valor', 'required'),
-                array('cotizacion_id, n_personas, tipo_servicio_id, lugar_id, entrada, idioma_guia_id', 'numerical', 'integerOnly'=>true),
+                array('fecha, n_personas, tipo_servicio_id, excursion_id, idioma_guia_id, valor', 'required'),
+                array('cotizacion_id, n_personas, tipo_servicio_id, excursion_id, entrada, idioma_guia_id', 'numerical', 'integerOnly'=>true),
                 array('valor', 'numerical'),
                 array('dia_semana', 'length', 'max'=>2),
                 array('hora', 'safe'),
                 // The following rule is used by search().
                 // @todo Please remove those attributes that should not be searched.
-                array('id, cotizacion_id, fecha, dia_semana, hora, n_personas, tipo_servicio_id, lugar_id, entrada, idioma_guia_id, valor', 'safe', 'on'=>'search'),
+                array('id, cotizacion_id, fecha, dia_semana, hora, n_personas, tipo_servicio_id, excursion_id, entrada, idioma_guia_id, valor', 'safe', 'on'=>'search'),
             );
 	}
 
@@ -59,7 +59,7 @@ class Servicio extends CActiveRecord {
                     'extras' => array(self::MANY_MANY, 'Extra', 'extra_servicio(servicio_id, extra_id)'),
                     'cotizacion' => array(self::BELONGS_TO, 'Cotizacion', 'cotizacion_id'),
                     'tipoServicio' => array(self::BELONGS_TO, 'TipoServicio', 'tipo_servicio_id'),
-                    'lugar' => array(self::BELONGS_TO, 'Lugar', 'lugar_id'),
+                    'excursion' => array(self::BELONGS_TO, 'Excursion', 'excursion_id'),
                     'idiomaGuia' => array(self::BELONGS_TO, 'Idioma', 'idioma_guia_id'),
             );
 	}
@@ -76,7 +76,7 @@ class Servicio extends CActiveRecord {
                 'hora' => 'Hora',
                 'n_personas' => 'N° Personas',
                 'tipo_servicio_id' => 'Tipo Servicio',
-                'lugar_id' => 'Lugar',
+                'excursion_id' => 'Lugar',
                 'entrada' => 'Entrada',
                 'idioma_guia_id' => 'Idioma/Guía',
                 'valor' => 'Valor',
@@ -109,7 +109,7 @@ class Servicio extends CActiveRecord {
 		$criteria->compare('hora',$this->hora,true);
 		$criteria->compare('n_personas',$this->n_personas);
 		$criteria->compare('tipo_servicio_id',$this->tipo_servicio_id);
-		$criteria->compare('lugar_id',$this->lugar_id);
+		$criteria->compare('excursion_id',$this->excursion_id);
 		$criteria->compare('entrada',$this->entrada);
 		$criteria->compare('idioma_guia_id',$this->idioma_guia_id);
 		$criteria->compare('valor',$this->valor);

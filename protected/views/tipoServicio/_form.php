@@ -29,6 +29,11 @@
             <?php echo $form->dropDownList($model,'sigueA',array(0=>'NO', 1=>'SÍ')); ?>
             <?php echo $form->error($model,'sigueA'); ?>
 	</div>
+        <div class="row">
+            <?php echo $form->labelEx($model,'valor'); ?>
+            <?php echo $form->textField($model,'valor',array('size'=>60,'maxlength'=>100)); ?>
+            <?php echo $form->error($model,'valor'); ?>
+	</div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

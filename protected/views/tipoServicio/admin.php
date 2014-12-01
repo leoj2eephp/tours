@@ -52,6 +52,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
                 'name'=>'sigueA',
                 'value'=>'$data->sigueA == 0 ? "NO" : "SI"',
             ),
+            'valor',
             array(
                 'class'=>'CButtonColumn',
             ),

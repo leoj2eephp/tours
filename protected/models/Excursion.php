@@ -7,6 +7,8 @@
  * @property integer $id
  * @property string $nombre
  * @property string $descripcion
+ * @property integer $tipo_servicio_id
+ * @property double $valor
  */
 class Excursion extends CActiveRecord {
     
@@ -29,12 +31,12 @@ class Excursion extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('nombre, descripcion', 'required'),
-            //array('tipo_excursion_id', 'numerical', 'integerOnly'=>true),
+            array('nombre, tipo_servicio_id', 'required'),
+            array('tipo_servicio_id, valor', 'numerical', 'integerOnly'=>true),
             array('nombre', 'length', 'max'=>100),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, nombre, descripcion, image', 'safe', 'on'=>'search'),//, sigue_a joinSeguidaPor, joinSigueA, idSeguidas', 'safe', 'on'=>'search'),
+            array('id, nombre, descripcion, image, tipo_servicio_id, valor', 'safe', 'on'=>'search'),//, sigue_a joinSeguidaPor, joinSigueA, idSeguidas', 'safe', 'on'=>'search'),
         );
     }
 
@@ -47,6 +49,7 @@ class Excursion extends CActiveRecord {
         return array(
             'imagenes' => array(self::MANY_MANY, 'Imagen', 'imagen_excursion(imagen_id, excursion_id)'),
             'tours' => array(self::HAS_MANY, 'Tour', 'excursion_id'),
+            'tipoServicio' => array(self::BELONGS_TO, 'TipoServicio', 'tipo_servicio_id'),
             //'sigueA' => array(self::HAS_MANY, 'SigueA', 'seguida_por_id'),
             //'seguidaPor' => array(self::HAS_ONE, 'SigueA', 'sigue_a_id'),
         );
@@ -62,6 +65,7 @@ class Excursion extends CActiveRecord {
             'descripcion' => 'Descripcion',
             //'tipo_excursion_id' => 'Tipo Excursion',
             'ruta_imagen' => 'Ruta Imagen',
+            'valor' => 'Precio',
             //'sigue_a' => 'Sigue a..',
         );
     }
@@ -85,7 +89,12 @@ class Excursion extends CActiveRecord {
         $criteria->compare('id',$this->id);
         $criteria->compare('nombre',$this->nombre,true);
         $criteria->compare('descripcion',$this->descripcion,true);
+        $criteria->compare('valor',$this->valor,true);
 
+        $criteria->with = array('tipoServicio');
+        $criteria->compare('tipoServicio.id', $this->tipo_servicio_id, true);
+        $criteria->together = true;
+            
         return new CActiveDataProvider($this, array(
                 'criteria'=>$criteria,
         ));

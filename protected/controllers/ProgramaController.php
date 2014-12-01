@@ -65,6 +65,8 @@ class ProgramaController extends Controller {
     
     public function actionServicios() {
         $id = Yii::app()->user->getState('idPrograma');
+        $paxMin = 5;
+        $paxMax = 7;
         $model = new ServicioPrograma;
         if(isset($_POST['ServicioPrograma'])) {
             $valid = true;
@@ -97,22 +99,21 @@ class ProgramaController extends Controller {
         $tiposServicio = TipoServicio::getDataForDropDownList();
         $idiomas = Idioma::getDataForDropDownList();
         $extras = Extra::getDataForDropDownList();
-        $this->render('servicios2', array("model"=>$model, "modelCotizacion"=>$modelPrograma, 
-                        "tiposServicio"=>$tiposServicio, 'idiomas'=>$idiomas, 'extras'=>$extras));
+        $this->render('servicios2', array("model"=>$model, "modelCotizacion"=>$modelPrograma, "tiposServicio"=>$tiposServicio,
+            'idiomas'=>$idiomas, 'extras'=>$extras, 'paxMin'=>$paxMin, 'paxMax'=>$paxMax));
     }
     
     public function actionGetLugaresAjax() {
         $id = $_POST['idTipoServicio'];
         $index = $_POST['index'];
-        //$lista = Tour::model()->findAll('tipo_servicio_id = :servicioId',array(':servicioId'=>$id));
         $lugar = TipoServicio::model()->findByPk($id);
         if($lugar->sigueA)
-            $lista = Lugares::getFullName($id);
+            $lista = Tour::getFullNameAll($id);
         else
-            $lista = Lugar::model()->findAll('tipo_servicio_id = :tsId', array(':tsId'=>$id));
-        $lista = CHtml::listData($lista, 'id', 'nombre');
-        foreach($lista as $dato => $nombre) {
-            echo CHtml::tag('option',array('value'=>$dato),CHtml::encode($nombre),true);
+            $lista = Excursion::model()->findAll('tipo_servicio_id = :tsId', array(':tsId'=>$id));
+        
+        foreach($lista as $l) {
+            echo CHtml::tag('option',array('value'=>$l['id'], 'precio'=>$l['valor']),CHtml::encode($l['nombre']),true);
         }
     }
     

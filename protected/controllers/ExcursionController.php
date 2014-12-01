@@ -96,10 +96,11 @@ class ExcursionController extends Controller {
         
         $modelExcursion = Excursion::model()->findAll();
         $excursionList = CHtml::listData($modelExcursion, 'id', 'nombre');
-        
+        $tipoServicios = TipoServicio::getDataForDropDownList();
         $this->render('create',array(
             'model'=>$model,
             'excursionList'=>$excursionList,
+            'tipoServicios'=>$tipoServicios,
         ));
     }
     
@@ -162,10 +163,12 @@ class ExcursionController extends Controller {
         $criteria->params = array(":id"=>$model->id);
         $modelExcursion = Excursion::model()->findAll($criteria);
         $excursionList = CHtml::listData($modelExcursion, 'id', 'nombre');
+        $tipoServicios = TipoServicio::getDataForDropDownList();
         
         $this->render('update',array(
             'model'=>$model,
             'excursionList'=>$excursionList,
+            'tipoServicios'=>$tipoServicios,
         ));
     }
 
