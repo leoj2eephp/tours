@@ -1,7 +1,7 @@
-changeTotales<head>
+<head>
     <style>
         #hora { width: 56px; }
-        .container { max-width: none; width: 1080px; }
+        .container { max-width: none; width: 2117px; }
         td { padding: 2px 2px 0px 5px; border: 2px solid white; }
         .cabecera { background-color: #007BB9; color: white; }
         .cabecera2 { background-color: #94ABB6; color: white; height: 29px; }
@@ -34,7 +34,7 @@ changeTotales<head>
             html += '<td><input type="text" id="dia_'+lastRow+'" disabled="disabled" style="width: 85px;">';
             html += '<input type="hidden" name="ServicioPrograma['+lastRow+'][dia_semana]" /></td>';
             html += '<td><input type="text" name="ServicioPrograma['+lastRow+'][hora]" class="datetimepicker" style="width: 72px;"/></td>';
-            html += '<td><select name="ServicioPrograma['+lastRow+'][tipo_servicio_id]" style="width: 125px;" class="ajaxLugares">\n\
+            html += '<td><select name="ServicioPrograma['+lastRow+'][tipo_servicio_id]" style="width: 125px;" class="ajaxLugares" >\n\
                         <option value="">Seleccione</option>';
             <?php
                 foreach($tiposServicio as $valor => $dato) {
@@ -42,7 +42,7 @@ changeTotales<head>
                 }
             ?>
             html += '</select></td>';
-            html += '<td><select name="ServicioPrograma['+lastRow+'][lugar_id]" id="lugarId_'+lastRow+'" class="lugares" style="width: 150px;"></select></td>';
+            html += '<td><select name="ServicioPrograma['+lastRow+'][lugar_id]" id="lugarId_'+lastRow+'" class="lugares" onchange="changeTotales('+lastRow+');" style="width: 150px;"></select></td>';
             html += '<td><select name="ServicioPrograma['+lastRow+'][entrada]" style="width: 56px;"><option value="0">No</option><option value="1">Sí</option></select></td>';
             html += '<td><select name="ServicioPrograma['+lastRow+'][idioma_guia_id]" id="idiomaGuia_'+lastRow+'" class="idiomaGuia" onchange="changeTotales('+lastRow+');" style="width: 110px;">\n\
                         <option value="">Seleccione</option>';
@@ -216,7 +216,7 @@ changeTotales<head>
             cargaIdiomas();
             cargaExtras();
             
-            $(".container").attr("style", "width: 1580px;");
+            //$(".container").attr("style", "width: 1580px;");
         });
     </script>
 </head>

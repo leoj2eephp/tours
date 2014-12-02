@@ -35,20 +35,14 @@ class ProgramaController extends Controller {
             if($model->validate()) {
                 $myDateTime1 = DateTime::createFromFormat('d/m/Y', $model->fecha);
                 $model->fecha = $myDateTime1->format('Y-m-d');
-                /*$myDateTime2 = DateTime::createFromFormat('d/m/Y', $model->fecha_inicio);
-                $model->fecha_inicio = $myDateTime2->format('Y-m-d');
-                $myDateTime3 = DateTime::createFromFormat('d/m/Y', $model->fecha_termino);
-                $model->fecha_termino = $myDateTime3->format('Y-m-d');*/
-                //if($modelCotizante->save()){
-                    //$model->cotizante_id = $modelCotizante->id;
                 if($model->save()) {
                     Yii::app()->user->setState('idPrograma',$model->id);
+                    Yii::app()->user->setState('paxMin',$model->pax_min);
+                    Yii::app()->user->setState('paxMax',$model->pax_max);
                     $this->redirect(array('servicios'));
                 }
-                //}
             } else {
                 $model->addErrors($model->getErrors());
-                //$cotizacionForm->addErrors($modelCotizante->getErrors());
             }
         }
         
@@ -62,8 +56,8 @@ class ProgramaController extends Controller {
     
     public function actionServicios() {
         $id = Yii::app()->user->getState('idPrograma');
-        $paxMin = 5;
-        $paxMax = 7;
+        $paxMin = Yii::app()->user->getState('paxMin');
+        $paxMax = Yii::app()->user->getState('paxMax');
         $model = new ServicioPrograma;
         if(isset($_POST['ServicioPrograma'])) {
             $valid = true;
