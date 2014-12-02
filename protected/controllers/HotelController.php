@@ -27,12 +27,8 @@ class HotelController extends Controller
 	public function accessRules() {
             return array(
                 array('allow',  // allow all users to perform 'index' and 'view' actions
-                        'actions'=>array('view'),
-                        'users'=>array('*'),
-                ),
-                array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                        'actions'=>array('admin','delete','create','update','asdf'),
-                        'users'=>Usuario::getTypeUsers(1, false), //usuario admin, no uppercase
+                        'actions'=>array('view','admin','delete','create','update'),
+                        'roles'=>array('ADMINISTRADOR'),
                 ),
                 array('deny',  // deny all users
                         'users'=>array('*'),

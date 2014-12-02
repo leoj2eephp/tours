@@ -25,7 +25,7 @@ class UsuarioController extends Controller {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions'=>array('admin','delete','create','update','view'),
-                    'users'=>array('*'), //usuario admin, no uppercase
+                    'roles'=>array('ADMINISTRADOR'), //usuario admin, no uppercase
                     //'roles'=>array('administrador'), //usuario admin, no uppercase
             ),
             array('deny',  // deny all users
