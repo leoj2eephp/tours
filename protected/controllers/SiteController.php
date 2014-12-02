@@ -29,17 +29,7 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-            $usuario = Usuario::model()->findByPk(Yii::app()->user->id);
-            $rol = "";
-            if($usuario != null){
-                $rol = $usuario->rol;
-            }
-            if($rol == "AGENCIA"){
-                $this->redirect(CController::createUrl('//cotizacion/index'));
-            }
-            else{
-                $this->redirect(CController::createUrl('//home/index'));
-            }
+            $this->render('index');
             
 	}
 
@@ -102,8 +92,23 @@ class SiteController extends Controller
 		{
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
+			if($model->validate() && $model->login()){
+                            $usuario = Usuario::model()->findByPk(Yii::app()->user->id);
+                            $rol = "";
+                            if($usuario != null){
+                                $rol = $usuario->rol;
+                            }
+                            if($rol == "AGENCIA"){
+                                $this->redirect(CController::createUrl('//cotizacion/create'));
+                            }
+                            elseif($rol == "ADMINISTRADOR"){
+                                $this->redirect(CController::createUrl('//site/index'));
+                            }
+                            else{
+                                $this->redirect(CController::createUrl('//home/index'));
+                            }  
+                        }
+			//	$this->redirect(Yii::app()->user->returnUrl);
 		}
 		// display the login form
 		$this->render('login',array('model'=>$model));
@@ -115,6 +120,6 @@ class SiteController extends Controller
 	public function actionLogout()
 	{
 		Yii::app()->user->logout();
-		$this->redirect(Yii::app()->homeUrl);
+		$this->redirect(CController::createUrl('//home/index'));
 	}
 }

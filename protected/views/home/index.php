@@ -7,7 +7,7 @@
             position: absolute;
             top: 154px;
             bottom: 0px;
-            width: 164px;
+            width: 6px;
             right: 0px;
             background: url('/tours/themes/hebo/img/sombra.png') 100% 0px no-repeat;
         }
@@ -166,6 +166,9 @@
             
             $("#inicio").click(function(){
                 $("#contenido").load('home/inicio');
+            });
+            $("#iniciarSesion").click(function(){
+                window.location = '/tours/index.php/site/login';
             });
             $("#sobreNosotros").click(function(){
                 $("#contenido").load('home/aboutUs');

@@ -1,17 +1,7 @@
-<section id="bottom" class="">
-    <div class="container bottom"> 
-    	<div class="row-fluid ">
-            <div class="span3">
-            	<h5>About us</h5>                
-            </div><!-- /span3-->
-        </div><!-- /row-fluid -->
-        </div><!-- /container-->
-</section><!-- /bottom-->
-
 <footer>
     <div class="footer">
         <div class="container">
-            kagfhasdhfgshgfk
+            &copy; MVS Ingeniería Ltda.
         </div>
 	</div>
 </footer>
