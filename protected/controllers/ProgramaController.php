@@ -6,10 +6,13 @@ class ProgramaController extends Controller {
     
     public function accessRules() {
         return array(
+            array('allow',  // allow all users to perform 'index' and 'view' actions
+                    'actions'=>array('index','view','getLugaresAjax','confirmacion'),
+                    'users'=>array('*'),
+            ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('create','servicios','getLugaresAjax'),
-                    'roles'=>array('AGENCIA','ADMINISTRADOR'), //usuario admin, no uppercase
-                    //'roles'=>array('administrador'), //usuario admin, no uppercase
+                    'actions'=>array('admin','delete','create','update','asdf'),
+                    'users'=>Usuario::getTypeUsers(1, false), //usuario admin, no uppercase
             ),
             array('deny',  // deny all users
                     'users'=>array('*'),
