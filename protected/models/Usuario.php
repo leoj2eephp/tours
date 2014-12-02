@@ -32,6 +32,7 @@ class Usuario extends CActiveRecord {
                     array('username, email', 'length', 'max'=>100),
                     array('password, rol', 'length', 'max'=>250),
                     array('email', 'email'),
+                    array('username','unique'),
                     array('id, username, password, rol, email', 'safe', 'on'=>'search'),
             );
     }

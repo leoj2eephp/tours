@@ -52,11 +52,11 @@ class UsuarioController extends Controller {
         $model=new Usuario;
         if(isset($_POST['Usuario'])) {
             $model->attributes=$_POST['Usuario'];
+            $rol = ($model->rol == 1)?'ADMINISTRADOR':'AGENCIA';
+            $model->rol = $rol;
             $model->password = sha1($model->password);
             if($model->save()){
                 $auth= Yii::app()->authManager;
-                $rol = $model->rol;
-                $rol = ($rol == 1)?'administrador':'agencia';
                 $auth->assign($rol,$model->id);
                 $this->redirect(array('view','id'=>$model->id));
             }
@@ -78,13 +78,13 @@ class UsuarioController extends Controller {
         
         if(isset($_POST['Usuario'])) {
             $model->attributes=$_POST['Usuario'];
+            $rol = ($model->rol == 1)?'ADMINISTRADOR':'AGENCIA';
+            $model->rol = $rol;
             $model->password = sha1($model->password);
             if($model->save()){
                 $auth= Yii::app()->authManager;
-                $rol = $model->rol;
                 Authassignment::model()->deleteAllByAttributes(array('userid'=>$id));
                 $auth->revoke($rol,$model->id);
-                $rol = ($rol == 1)?'administrador':'agencia';
                 $auth->assign($rol,$model->id);
                 $this->redirect(array('view','id'=>$model->id));
             }
@@ -102,6 +102,7 @@ class UsuarioController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) {
+        Authassignment::model()->deleteAllByAttributes(array('userid'=>$id));
         $this->loadModel($id)->delete();
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser

@@ -9,6 +9,7 @@ return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Cotización Tours',
         'theme'=>'hebo',
+        'language' =>'es',
 	// preloading 'log' component
 	'preload'=>array('log'),
 
