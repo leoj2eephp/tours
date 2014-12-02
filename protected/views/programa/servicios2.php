@@ -1,10 +1,10 @@
-<head>
+changeTotales<head>
     <style>
         #hora { width: 56px; }
         .container { max-width: none; width: 1080px; }
         td { padding: 2px 2px 0px 5px; border: 2px solid white; }
         .cabecera { background-color: #007BB9; color: white; }
-        .cabecera2 { background-color: #94ABB6; color: white; }
+        .cabecera2 { background-color: #94ABB6; color: white; height: 29px; }
         .ui-datepicker { font-size: 10px; }
         .row-fluid .span8 { width: 100%; }
     </style>
@@ -15,6 +15,8 @@
                 echo 'arrayDays['.$valor.'] = "'.$dato.'";';
             }
             echo 'var baseURL = "'.Yii::app()->request->baseUrl.'";';
+            echo 'var paxMin = '.$paxMin.';';
+            echo 'var paxMax = '.$paxMax.';';
         ?>
             
         function getDayOfTheWeek(t){
@@ -40,17 +42,17 @@
                 }
             ?>
             html += '</select></td>';
-            html += '<td><select name="ServicioPrograma['+lastRow+'][lugar_id]" id="lugarId_'+lastRow+'" style="width: 150px;"></select></td>';
+            html += '<td><select name="ServicioPrograma['+lastRow+'][lugar_id]" id="lugarId_'+lastRow+'" class="lugares" style="width: 150px;"></select></td>';
             html += '<td><select name="ServicioPrograma['+lastRow+'][entrada]" style="width: 56px;"><option value="0">No</option><option value="1">Sí</option></select></td>';
-            html += '<td><select name="ServicioPrograma['+lastRow+'][idioma_guia_id]" style="width: 110px;">\n\
+            html += '<td><select name="ServicioPrograma['+lastRow+'][idioma_guia_id]" id="idiomaGuia_'+lastRow+'" class="idiomaGuia" onchange="changeTotales('+lastRow+');" style="width: 110px;">\n\
                         <option value="">Seleccione</option>';
             <?php
-                foreach($idiomas as $valor => $dato) {
+                /*foreach($idiomas as $valor => $dato) {
                     echo 'html += "<option value='.$valor.'>'.$dato.'</option>";';
-                }
+                }*/
             ?>
             html += '</select></td>';
-            html += '<td><select name="ServicioPrograma['+lastRow+'][extras][]" multiple="multiple" style="width: 110px; height: 56px;">';
+            html += '<td><select name="ServicioPrograma['+lastRow+'][extras][]" multiple="multiple" id="extras_'+lastRow+'" class="extras" onchange="changeTotales('+lastRow+');" style="width: 110px; height: 56px;">';
             <?php
                 foreach($extras as $valor => $dato) {
                     echo 'html += "<option value='.$valor.'>'.$dato.'</option>";';
@@ -66,6 +68,17 @@
             $("#lastRow").before(html);
             //$("#tablaServicios tr:last").after(html);
 
+            newLastRow = parseInt($("#tablaTotales tr[index]:last").attr("index")) + 1;
+            newHtml = '<tr class="row" index='+lastRow+' style="height: 69px;" >';
+            newHtml += '<td>$</td>';
+            var i = paxMin;
+            for(i;i<=paxMax;i++) {
+                newHtml += '<td><input type="text" class="totales_'+newLastRow+'" pax="'+i+'" style="width: 74px;" /></td>';
+                newHtml += '<td>'+(i*40)+'</td>';
+            }                        
+            newHtml += '</tr>';
+            $("#tablaTotales tr:last").after(newHtml);
+    
             $(".datepicker").datepicker({
                 yearRange: '-0:+5',
                 minDate: '+0m +0d',
@@ -82,13 +95,35 @@
                 $.ajax({
                     url: '/tours/index.php/programa/getLugaresAjax',
                     type: 'POST',
-                    data: "idTipoServicio="+$(this).val()+"&index="+$index,
+                    data: "idTipoServicio="+$(this).val()+"&index="+$index+"&idHtml="+$(this).attr("id"),
                     dataType: 'html',
                     success: function(data){
                         $("#lugarId_"+$index).html(data);
+                        var json = JSON.parse(data);
+                        var index = json[json.length-1].index;
+                        var idHtml = json[json.length-1].idHtml;
+                        var precio = 0;
+                        var html = "";
+                        if (json[0].index == null) {
+                            $(json).each(function(i,o){
+                                if(o.index == null)
+                                    html += o;
+                            });
+                            $("#lugarId_"+index).html(html);
+
+                            if($("#lugarId_"+index).val() != null)
+                                precio = $("#lugarId_"+index+">option:selected").attr("precio");
+                        } else {
+                            $("#lugarId_"+index+">option").remove();
+                        }
+
+                        changeTotales(index);
                     }
                 });
             });
+            
+            cargaIdiomas();
+            cargaExtras();
         }
         
         function removeButton(a){
@@ -96,13 +131,51 @@
             $("tr[index="+index+"]").remove();
         }
         
-        function changeTotales(precio, index) {
+        function changeTotales(index) {
+            precioLugar = $("#lugarId_"+index+">option:selected").attr("precio") != null ? $("#lugarId_"+index+">option:selected").attr("precio") : 0;
+            precioGuiaIdioma = $("#idiomaGuia_"+index+" option:selected").attr("precio") != null ? $("#idiomaGuia_"+index+" option:selected").attr("precio") : 0;
+            precioExtras = 0;
+            $("#extras_"+index+" option:selected").each(function(i,o){
+                precioExtras += parseInt($(o).attr("precio"));
+            });
+            subtotal = parseInt(precioLugar) + parseInt(precioGuiaIdioma) + parseInt(precioExtras);
             $(".totales_"+index).each(function(i,o){
-                total = $(o).val();
                 pax = $(o).attr("pax");
-                total = (parseInt(total) + parseInt(precio)) * parseInt(pax);
-                console.log(precio);
-                //$(o).val(total);
+                total = parseInt(subtotal) * parseInt(pax);
+                $(o).val(total);
+            });
+        }
+        
+        function addOptions(json, index) {
+            var option = json;
+            $("#lugarId_"+index).html(option);
+        }
+        
+        function cargaIdiomas() {
+            $(".idiomaGuia>option").remove();
+            $.ajax({
+                url: '/tours/index.php/programa/cargarIdiomas',
+                type: 'POST',
+                dataType: 'html',
+                success: function(data){
+                    $(".idiomaGuia").each(function(i,o){
+                        $(o).html($(o).html() + data);
+                    });
+                }
+            });
+        }
+        
+        function cargaExtras() {
+            $(".extras>option").remove();
+            $.ajax({
+                url: '/tours/index.php/programa/cargarExtras',
+                type: 'POST',
+                dataType: 'html',
+                success: function(data){
+                    $(".extras").each(function(i,o){
+                        $(o).html($(o).html() + data);
+                    });
+                }
             });
         }
         
@@ -116,32 +189,32 @@
                 getDayOfTheWeek($(this));
             });
             
-            $(".tipoServicio").change(function(){
+            $(".lugares").change(function(){
+                var select = $(this).attr("id");
                 var index = $(this).parent().parent().attr("index");
                 var precio = 0;
-                if($("#lugarId_"+index).val() != null) {
-                    console.log("entre 1");
-                    precio = $("#lugarId_"+index+">option:selected").attr("precio");
-                } else if(this.options[this.selectedIndex].value != '') {
-                    console.log("entre 2");
-                    precio = this.options[this.selectedIndex].getAttribute("precio");
-                }
-                
-                console.log(precio);
-                //changeTotales(precio, index);
+                precio = $("#"+select+" option:selected").attr("precio") != "" ? $("#"+select+" option:selected").attr("precio") : 0;
+                changeTotales(index);
             });
             
-            $(".lugares").change(function(){
+            $(".idiomaGuia").change(function(){
+                var select = $(this).attr("id");
                 var index = $(this).parent().parent().attr("index");
                 var precio = 0;
-                if($(this).val() != null) {
-                    precio = $(this).attr("precio");
-                } else if($("#tipoServicio_"+index+">option:selected").val() != '') {
-                    precio = $("#tipoServicio_"+index+">option:selected").attr("precio");
-                }
-                
-                changeTotales(precio, index);
+                precio = $("#"+select+" option:selected").attr("precio") != "" ? $("#"+select+" option:selected").attr("precio") : 0;
+                changeTotales(index);
+            })
+            
+            $(".extras").change(function(){
+                var select = $(this).attr("id");
+                var index = $(this).parent().parent().attr("index");
+                var precio = 0;
+                precio = $("#"+select+" option:selected").attr("precio") != "" ? $("#"+select+" option:selected").attr("precio") : 0;
+                changeTotales(index);
             });
+            
+            cargaIdiomas();
+            cargaExtras();
             
             $(".container").attr("style", "width: 1580px;");
         });
@@ -217,23 +290,31 @@
                     array(
                         'ajax' => array(
                             'type'=>'POST', //request type
-                            'url'=>CController::createUrl('programa/getLugaresAjax'),
-                            'data'=>array('idTipoServicio'=>'js:$(this).val()','index'=>'js:$(this).parent().parent().attr("index")'),
+                            'url' => CController::createUrl('programa/getLugaresAjax'),
+                            'data'=>array('idTipoServicio'=>'js:$(this).val()','index'=>'js:$(this).parent().parent().attr("index")','idHtml'=>'js:$(this).attr("id")'),
                             'update'=>'#lugarId_0',
                             'async'=>false,
-                            /*'success'=>'function(data){'
-                            . ' alert(data);
-                                var index = $(this).parent().parent().attr("index");
+                            'success'=>'function(data){
+                                var json = JSON.parse(data);
+                                var index = json[json.length-1].index;
+                                var idHtml = json[json.length-1].idHtml;
                                 var precio = 0;
-                                if($("#lugarId_"+index).val() != null) {
-                                    precio = $("#lugarId_"+index+">option:selected").attr("precio");
-                                } else if(this.options[this.selectedIndex].value != "") {
-                                    precio = this.options[this.selectedIndex].getAttribute("precio");
-                                }
+                                var html = "";
+                                if (json[0].index == null) {
+                                    $(json).each(function(i,o){
+                                        if(o.index == null)
+                                            html += o;
+                                    });
+                                    $("#lugarId_"+index).html(html);
 
-                                console.log(precio);
-                                changeTotales(precio, index);'
-                            . '}',*/
+                                    if($("#lugarId_"+index).val() != null)
+                                        precio = $("#lugarId_"+index+">option:selected").attr("precio");
+                                } else {
+                                    $("#lugarId_"+index+">option").remove();
+                                }
+                                
+                                changeTotales(index);'
+                            . '}',
                         ),
                         'prompt'=>'Seleccione',
                         'style'=>'width: 125px;',
@@ -245,11 +326,12 @@
                 <?php echo CHtml::activeDropDownList($model,'[0]excursion_id',array(),array('id'=>'lugarId_0','style'=>'width: 150px;','class'=>'lugares')); ?>
             </td>
             <td><?php echo CHtml::activeDropDownList($model,'[0]entrada',array('No','Sí'),array('style'=>'width: 56px;')); ?></td>
-            <td><?php echo CHtml::activeDropDownList($model,'[0]idioma_guia_id',$idiomas,array('prompt'=>'Seleccione','style'=>'width: 110px;')); ?></td>
-            <td><?php echo CHtml::activeListBox($model,'[0]extras',$extras,array('style'=>'width: 110px; height: 56px;','multiple'=>'multiple')); ?></td>
+            <?php //echo CHtml::activeDropDownList($model,'[0]idioma_guia_id',null,array('prompt'=>'Seleccione','style'=>'width: 110px;','class'=>'idiomaGuia')); ?>
+            <td><select name="ServicioPrograma[0][idioma_guia_id]" style="width: 110px;" class="idiomaGuia" id="idiomaGuia_0"></select></td>
+            <?php //echo CHtml::activeListBox($model,'[0]extras',$extras,array('style'=>'width: 110px; height: 56px;','multiple'=>'multiple')); ?>
+            <td><select name="ServicioPrograma[0][extras]" style="width: 110px; height: 56px;" class="extras" id="extras_0" multiple="multiple"></select></td>
             <td><?php echo CHtml::button('',array("class"=>"addButton",
                 'style'=>'border: none; background: url('.Yii::app()->request->baseUrl.'/images/add_button.png) no-repeat;padding-bottom: 38px; width: 52px;')); ?></td>
-
 
         </tr>
         <tr class="row" id="lastRow">
@@ -271,7 +353,7 @@
             }
         ?>
         </tr>
-        <tr class="row" index="0">
+        <tr class="row" index="0" id="firstTotalesRow" style="height: 69px;" >
             <td>$</td>
         <?php
             $i = $paxMin;

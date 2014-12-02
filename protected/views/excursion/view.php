@@ -23,6 +23,6 @@ $this->menu=array(
             'nombre',
             'descripcion',
             'tipoServicio.nombre',
-            'valor',
+            //'valor',
 	),
 )); ?>

@@ -32,11 +32,11 @@ class Excursion extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('nombre, tipo_servicio_id', 'required'),
-            array('tipo_servicio_id, valor', 'numerical', 'integerOnly'=>true),
+            array('tipo_servicio_id', 'numerical', 'integerOnly'=>true),
             array('nombre', 'length', 'max'=>100),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, nombre, descripcion, image, tipo_servicio_id, valor', 'safe', 'on'=>'search'),//, sigue_a joinSeguidaPor, joinSigueA, idSeguidas', 'safe', 'on'=>'search'),
+            array('id, nombre, descripcion, image, tipo_servicio_id,', 'safe', 'on'=>'search'),//, sigue_a joinSeguidaPor, joinSigueA, idSeguidas', 'safe', 'on'=>'search'),
         );
     }
 
@@ -65,7 +65,6 @@ class Excursion extends CActiveRecord {
             'descripcion' => 'Descripcion',
             //'tipo_excursion_id' => 'Tipo Excursion',
             'ruta_imagen' => 'Ruta Imagen',
-            'valor' => 'Precio',
             //'sigue_a' => 'Sigue a..',
         );
     }
@@ -89,7 +88,6 @@ class Excursion extends CActiveRecord {
         $criteria->compare('id',$this->id);
         $criteria->compare('nombre',$this->nombre,true);
         $criteria->compare('descripcion',$this->descripcion,true);
-        $criteria->compare('valor',$this->valor,true);
 
         $criteria->with = array('tipoServicio');
         $criteria->compare('tipoServicio.id', $this->tipo_servicio_id, true);

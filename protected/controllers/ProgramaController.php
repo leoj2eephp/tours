@@ -21,10 +21,7 @@ class ProgramaController extends Controller {
     }
     
     public function actionCreate() {
-        //$cotizacionForm = new CotizacionForm();
         $model = new Programa;
-        //$modelCotizante = new Cotizante;
-        
         $empresasData = Empresa::getDataForDropDownList();
         $paisesData = Pais::getDataForDropDownList();
         $monedasData = Moneda::getDataForDropDownList();
@@ -32,7 +29,7 @@ class ProgramaController extends Controller {
         for($i=4;$i<13;$i++) {
             $rangoPax[$i] = $i;
         }
-        //$rangoPax = array(4=>4,5=>5,6=>6,7=>7);
+        
         if(isset($_POST['Programa'])) {
             $model->attributes = $_POST['Programa'];
             if($model->validate()) {
@@ -105,15 +102,32 @@ class ProgramaController extends Controller {
     
     public function actionGetLugaresAjax() {
         $id = $_POST['idTipoServicio'];
-        $index = $_POST['index'];
-        $lugar = TipoServicio::model()->findByPk($id);
-        if($lugar->sigueA)
-            $lista = Tour::getFullNameAll($id);
-        else
-            $lista = Excursion::model()->findAll('tipo_servicio_id = :tsId', array(':tsId'=>$id));
-        
-        foreach($lista as $l) {
-            echo CHtml::tag('option',array('value'=>$l['id'], 'precio'=>$l['valor']),CHtml::encode($l['nombre']),true);
+        $params = ["index"=>$_POST['index'], "idHtml"=>$_POST['idHtml']];
+        $json = array();
+        $lista = Tour::getFullNameAll($id);
+        if($lista != null) {
+            foreach($lista as $l) {
+                $json[] = CHtml::tag('option',array('value'=>$l['id'], 'precio'=>$l['valor']),CHtml::encode($l['nombre']),true);
+            }
+        }
+        array_push($json, $params);
+        echo CJSON::encode($json);
+    }
+    
+    public function actionCargarIdiomas() {
+        $idiomas = Idioma::model()->findAll();
+        $json = array();
+        echo '<option precio="0" value>Seleccione</option>';
+        foreach($idiomas as $i) {
+            echo '<option value="'.$i['id'].'" precio="'.$i['valor'].'">'.$i['nombre'].'</option>';
+        }
+    }
+    
+    public function actionCargarExtras() {
+        $extra = Extra::model()->findAll();
+        $json = array();
+        foreach($extra as $i) {
+            echo '<option value="'.$i['id'].'" precio="'.$i['valor'].'">'.$i['nombre'].'</option>';
         }
     }
     

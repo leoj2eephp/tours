@@ -99,7 +99,7 @@ class Idioma extends CActiveRecord {
     public static function getDataForDropDownList() {
         $idiomasData = array();
         $criteria = new CDbCriteria();
-        $criteria->select = array("id", "nombre");
+        $criteria->select = array("id", "nombre", "valor");
         $idiomas = Idioma::model()->findAll($criteria);
         foreach($idiomas as $datos) {
             $idiomasData[$datos->id] = $datos->nombre;

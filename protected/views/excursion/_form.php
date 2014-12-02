@@ -66,11 +66,11 @@
         <?php echo $form->textArea($model,'descripcion',array('rows'=>6, 'cols'=>150, 'style'=>'width: 605px;')); ?>
         <?php echo $form->error($model,'descripcion'); ?>
     </div>
-    <div class="row">
-        <?php echo $form->labelEx($model,'valor'); ?>
-        <?php echo $form->textField($model,'valor',array('rows'=>6, 'cols'=>150, 'style'=>'width: 105px;')); ?>
-        <?php echo $form->error($model,'valor'); ?>
-    </div>
+    <!--<div class="row">
+        <?php //echo $form->labelEx($model,'valor'); ?>
+        <?php //echo $form->textField($model,'valor',array('rows'=>6, 'cols'=>150, 'style'=>'width: 105px;')); ?>
+        <?php //echo $form->error($model,'valor'); ?>
+    </div>-->
     
     <!--<ul class="thumbnails">
         <li class="span3" style="width: 250px;" >
