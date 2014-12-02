@@ -35,8 +35,6 @@
                                     array('label'=>'Moneda', 'url'=>array('/moneda/admin')),
                                     array('label'=>'Hotel', 'url'=>array('/hotel/admin')),
                                     array('label'=>'Tipo Servicio', 'url'=>array('/tipoServicio/admin')),
-                                    array('label'=>'Lugar', 'url'=>array('/lugar/admin')),
-                                    array('label'=>'Lugares', 'url'=>array('/lugares/admin')),
                                     array('label'=>'Extra', 'url'=>array('/extra/admin')),
                                     array('label'=>'Línea Aérea', 'url'=>array('/lineaAerea/admin')),
                                     array('label'=>'Empresa', 'url'=>array('/empresa/admin')),
