@@ -9,23 +9,22 @@
           </a>
   
           <div class="nav-collapse">
+            <?php 
+            $usuario = Usuario::model()->findByPk(Yii::app()->user->id);
+            $rol = "";
+            if($usuario != null){
+                $rol = $usuario->rol;
+            }
+                      
+            ?>
                 <?php $this->widget('zii.widgets.CMenu',array(
                     'htmlOptions'=>array('class'=>'nav'),
                     'submenuHtmlOptions'=>array('class'=>'dropdown-menu'),
 					'itemCssClass'=>'item-test',
                     'encodeLabel'=>false,
                     'items'=>array(
-                        array('label'=>'Home <span class="caret"></span>', 'url'=>array('/site/index'),'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown","data-description"=>"our home page"), 
-                        'items'=>array(
-                            array('label'=>'Home 1 - Nivoslider', 'url'=>array('/site/index')),
-                            array('label'=>'Home 2 - Bootstrap carousal', 'url'=>array('/site/page', 'view'=>'home2')),
-                            array('label'=>'Home 3 - Piecemaker2', 'url'=>array('/site/page', 'view'=>'home3')),
-                            array('label'=>'Home 4 - Static image', 'url'=>array('/site/page', 'view'=>'home4')),
-                            array('label'=>'Home 5 - Video header', 'url'=>array('/site/page', 'view'=>'home5')),
-                            array('label'=>'Home 6 - Without slider', 'url'=>array('/site/page', 'view'=>'home6')),
-                        )),
                         array('label'=>'Administrar <span class="caret"></span>',
-                            'visible'=>!Yii::app()->user->isGuest,
+                            'visible'=>$rol == "ADMINISTRADOR",
                             //'visible'=>in_array(strtoupper(Yii::app()->user->name), Usuario::getTypeUsers(1, true)),//usuario admin, uppercase
                             'url'=>'#','itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),
                             'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown","data-description"=>""),
@@ -36,8 +35,8 @@
                                     array('label'=>'Moneda', 'url'=>array('/moneda/admin')),
                                     array('label'=>'Hotel', 'url'=>array('/hotel/admin')),
                                     array('label'=>'Tipo Servicio', 'url'=>array('/tipoServicio/admin')),
-                                    //array('label'=>'Lugar', 'url'=>array('/lugar/admin')),
-                                    //array('label'=>'Lugares', 'url'=>array('/lugares/admin')),
+                                    array('label'=>'Lugar', 'url'=>array('/lugar/admin')),
+                                    array('label'=>'Lugares', 'url'=>array('/lugares/admin')),
                                     array('label'=>'Extra', 'url'=>array('/extra/admin')),
                                     array('label'=>'Línea Aérea', 'url'=>array('/lineaAerea/admin')),
                                     array('label'=>'Empresa', 'url'=>array('/empresa/admin')),
@@ -47,13 +46,13 @@
                                     array('label'=>'Crear Tour', 'url'=>array('/tour/admin')),
                                 )),
                         array('label'=>'Cotizar', 'url'=>array('/cotizacion/create'),
-                            'visible'=>Yii::app()->user->isGuest),
+                            'visible'=>$rol == "AGENCIA"),
                             //'visible'=>in_array(strtoupper(Yii::app()->user->name), Usuario::getTypeUsers(2, true))),//usuario agencia, uppercase
                         array('label'=>'Programa', 'url'=>array('/programa/create'),
-                            'visible'=>Yii::app()->user->isGuest),
+                            'visible'=>$rol == "AGENCIA"),
                         array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest,'linkOptions'=>array("data-description"=>"member area")),
                         array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest,'linkOptions'=>array("data-description"=>"member area")),
-                        array('label'=>'Registrarse', 'url'=>array('/registro/create'), 'visible'=>Yii::app()->user->isGuest),
+                        //array('label'=>'Registrarse', 'url'=>array('/registro/create'), 'visible'=>Yii::app()->user->isGuest),
                     ),
                 )); ?>
     	</div>

@@ -29,7 +29,18 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('index');
+            $usuario = Usuario::model()->findByPk(Yii::app()->user->id);
+            $rol = "";
+            if($usuario != null){
+                $rol = $usuario->rol;
+            }
+            if($rol == "AGENCIA"){
+                $this->redirect(CController::createUrl('//cotizacion/index'));
+            }
+            else{
+                $this->redirect(CController::createUrl('//home/index'));
+            }
+            
 	}
 
 	/**

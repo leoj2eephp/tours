@@ -52,7 +52,7 @@ class UsuarioController extends Controller {
         $model=new Usuario;
         if(isset($_POST['Usuario'])) {
             $model->attributes=$_POST['Usuario'];
-            $model->password = password_hash($model->password, PASSWORD_DEFAULT);
+            $model->password = sha1($model->password);
             if($model->save()){
                 $auth= Yii::app()->authManager;
                 $rol = $model->rol;
@@ -78,7 +78,7 @@ class UsuarioController extends Controller {
         
         if(isset($_POST['Usuario'])) {
             $model->attributes=$_POST['Usuario'];
-            $model->password = password_hash($model->password, PASSWORD_DEFAULT);
+            $model->password = sha1($model->password);
             if($model->save()){
                 $auth= Yii::app()->authManager;
                 $rol = $model->rol;
