@@ -14,6 +14,7 @@
 class Tour extends CActiveRecord {
     
     public $nombre;
+    public $idHtmlAjax;
     
     /**
      * @return string the associated database table name

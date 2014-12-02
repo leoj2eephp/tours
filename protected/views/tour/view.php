@@ -24,5 +24,6 @@ $this->menu=array(
 		'excursions.nombre',
 		//'primera',
                 'tipoExcursion.nombre',
+                'valor',
 	),
 )); ?>

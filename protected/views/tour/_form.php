@@ -92,6 +92,11 @@
             <?php echo $form->dropDownList($model, '[0]tipo_excursion_id', $tipoExcursionList); ?>
             <?php echo $form->error($model,'[0]tipo_excursion_id'); ?>
         </div>
+        <div class="row">
+            <?php echo $form->labelEx($model,'[0]valor'); ?>
+            <?php echo $form->textField($model, '[0]valor'); ?>
+            <?php echo $form->error($model,'[0]valor'); ?>
+        </div>
         
         <table id="creaTour">
         <?php

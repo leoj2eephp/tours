@@ -16,5 +16,9 @@
         <b><?php echo CHtml::encode($data->getAttributeLabel('tipoExcursion.nombre')); ?>:</b>
 	<?php echo CHtml::encode($data->tipoExcursion->nombre); ?>
 	<br />
+        
+        <b><?php echo CHtml::encode($data->getAttributeLabel('valor')); ?>:</b>
+	<?php echo CHtml::encode($data->tipoExcursion->nombre); ?>
+	<br />
 
 </div>
