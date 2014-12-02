@@ -18,10 +18,7 @@ class ProgramaController extends Controller {
     }
     
     public function actionCreate() {
-        //$cotizacionForm = new CotizacionForm();
         $model = new Programa;
-        //$modelCotizante = new Cotizante;
-        
         $empresasData = Empresa::getDataForDropDownList();
         $paisesData = Pais::getDataForDropDownList();
         $monedasData = Moneda::getDataForDropDownList();
@@ -29,26 +26,20 @@ class ProgramaController extends Controller {
         for($i=4;$i<13;$i++) {
             $rangoPax[$i] = $i;
         }
-        //$rangoPax = array(4=>4,5=>5,6=>6,7=>7);
+        
         if(isset($_POST['Programa'])) {
             $model->attributes = $_POST['Programa'];
             if($model->validate()) {
                 $myDateTime1 = DateTime::createFromFormat('d/m/Y', $model->fecha);
                 $model->fecha = $myDateTime1->format('Y-m-d');
-                /*$myDateTime2 = DateTime::createFromFormat('d/m/Y', $model->fecha_inicio);
-                $model->fecha_inicio = $myDateTime2->format('Y-m-d');
-                $myDateTime3 = DateTime::createFromFormat('d/m/Y', $model->fecha_termino);
-                $model->fecha_termino = $myDateTime3->format('Y-m-d');*/
-                //if($modelCotizante->save()){
-                    //$model->cotizante_id = $modelCotizante->id;
                 if($model->save()) {
                     Yii::app()->user->setState('idPrograma',$model->id);
+                    Yii::app()->user->setState('paxMin',$model->pax_min);
+                    Yii::app()->user->setState('paxMax',$model->pax_max);
                     $this->redirect(array('servicios'));
                 }
-                //}
             } else {
                 $model->addErrors($model->getErrors());
-                //$cotizacionForm->addErrors($modelCotizante->getErrors());
             }
         }
         
@@ -62,8 +53,8 @@ class ProgramaController extends Controller {
     
     public function actionServicios() {
         $id = Yii::app()->user->getState('idPrograma');
-        $paxMin = 5;
-        $paxMax = 7;
+        $paxMin = Yii::app()->user->getState('paxMin');
+        $paxMax = Yii::app()->user->getState('paxMax');
         $model = new ServicioPrograma;
         if(isset($_POST['ServicioPrograma'])) {
             $valid = true;
@@ -92,25 +83,42 @@ class ProgramaController extends Controller {
             if($valid)
                 $this->redirect(array('confirmacion'));
         }
-        $modelPrograma = Programa::model()->findByPk($id);
+        $modelPrograma = Programa::model()->with('moneda')->findByPk($id);
         $tiposServicio = TipoServicio::getDataForDropDownList();
         $idiomas = Idioma::getDataForDropDownList();
         $extras = Extra::getDataForDropDownList();
-        $this->render('servicios2', array("model"=>$model, "modelCotizacion"=>$modelPrograma, "tiposServicio"=>$tiposServicio,
+        $this->render('servicios2', array("model"=>$model, "modelPrograma"=>$modelPrograma, "tiposServicio"=>$tiposServicio,
             'idiomas'=>$idiomas, 'extras'=>$extras, 'paxMin'=>$paxMin, 'paxMax'=>$paxMax));
     }
     
     public function actionGetLugaresAjax() {
         $id = $_POST['idTipoServicio'];
-        $index = $_POST['index'];
-        $lugar = TipoServicio::model()->findByPk($id);
-        if($lugar->sigueA)
-            $lista = Tour::getFullNameAll($id);
-        else
-            $lista = Excursion::model()->findAll('tipo_servicio_id = :tsId', array(':tsId'=>$id));
-        
-        foreach($lista as $l) {
-            echo CHtml::tag('option',array('value'=>$l['id'], 'precio'=>$l['valor']),CHtml::encode($l['nombre']),true);
+        $params = ["index"=>$_POST['index'], "idHtml"=>$_POST['idHtml']];
+        $json = array();
+        $lista = Tour::getFullNameAll($id);
+        if($lista != null) {
+            foreach($lista as $l) {
+                $json[] = CHtml::tag('option',array('value'=>$l['id'], 'precio'=>$l['valor']),CHtml::encode($l['nombre']),true);
+            }
+        }
+        array_push($json, $params);
+        echo CJSON::encode($json);
+    }
+    
+    public function actionCargarIdiomas() {
+        $idiomas = Idioma::model()->findAll();
+        $json = array();
+        echo '<option precio="0" value>Seleccione</option>';
+        foreach($idiomas as $i) {
+            echo '<option value="'.$i['id'].'" precio="'.$i['valor'].'">'.$i['nombre'].'</option>';
+        }
+    }
+    
+    public function actionCargarExtras() {
+        $extra = Extra::model()->findAll();
+        $json = array();
+        foreach($extra as $i) {
+            echo '<option value="'.$i['id'].'" precio="'.$i['valor'].'">'.$i['nombre'].'</option>';
         }
     }
     
