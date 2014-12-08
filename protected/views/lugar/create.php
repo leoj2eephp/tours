@@ -9,10 +9,10 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	//array('label'=>'List Lugar', 'url'=>array('index')),
-	array('label'=>'Manage Lugar', 'url'=>array('admin')),
+	array('label'=>'Administrar Lugar', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Create Lugar</h1>
+<h1>Crear Lugar</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model, 'tipoServicios'=>$tipoServicios)); ?>

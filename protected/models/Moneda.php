@@ -54,7 +54,7 @@ class Moneda extends CActiveRecord {
             return array(
                     'id' => 'ID',
                     'nombre' => 'Moneda',
-                    'conversion_dolar' => 'Conversion Dolar',
+                    'conversion_dolar' => 'Conversión Dolar',
             );
     }
 

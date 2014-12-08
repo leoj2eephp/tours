@@ -7,8 +7,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create Lugar', 'url'=>array('create')),
-	array('label'=>'Manage Lugar', 'url'=>array('admin')),
+	array('label'=>'Crear Lugar', 'url'=>array('create')),
+	array('label'=>'Administrar Lugar', 'url'=>array('admin')),
 );
 ?>
 

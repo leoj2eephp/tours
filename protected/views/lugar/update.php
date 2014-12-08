@@ -10,12 +10,12 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	//array('label'=>'List Lugar', 'url'=>array('index')),
-	array('label'=>'Create Lugar', 'url'=>array('create')),
-	array('label'=>'View Lugar', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Lugar', 'url'=>array('admin')),
+	array('label'=>'Crear Lugar', 'url'=>array('create')),
+	array('label'=>'Ver Lugar', 'url'=>array('view', 'id'=>$model->id)),
+	array('label'=>'Administrar Lugar', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Update Lugar <?php echo $model->id; ?></h1>
+<h1>Actualizar Lugar <?php echo $model->id; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model, 'tipoServicios'=>$tipoServicios)); ?>

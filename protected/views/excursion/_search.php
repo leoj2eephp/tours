@@ -24,7 +24,7 @@
             <?php echo $form->textArea($model,'descripcion',array('rows'=>6, 'cols'=>50)); ?>
 	</div>
 	<div class="row buttons">
-            <?php echo CHtml::submitButton('Search'); ?>
+            <?php echo CHtml::submitButton('Filtrar'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

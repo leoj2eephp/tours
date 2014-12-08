@@ -2,17 +2,12 @@
 /* @var $this EmpresaController */
 /* @var $model Empresa */
 
-$this->breadcrumbs=array(
-	'Empresas'=>array('index'),
-	'Create',
-);
 
 $this->menu=array(
-	array('label'=>'List Empresa', 'url'=>array('index')),
-	array('label'=>'Manage Empresa', 'url'=>array('admin')),
+	array('label'=>'Administrar Empresa', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Create Empresa</h1>
+<h1>Crear Empresa</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

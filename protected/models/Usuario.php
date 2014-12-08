@@ -32,7 +32,7 @@ class Usuario extends CActiveRecord {
                     array('username, email', 'length', 'max'=>100),
                     array('password, rol', 'length', 'max'=>250),
                     array('email', 'email'),
-                    array('username','unique'),
+                    array('username,email','unique'),
                     array('id, username, password, rol, email', 'safe', 'on'=>'search'),
             );
     }
@@ -54,8 +54,8 @@ class Usuario extends CActiveRecord {
     public function attributeLabels() {
             return array(
                     'id' => 'ID',
-                    'username' => 'Username',
-                    'password' => 'Password',
+                    'username' => 'Usuario',
+                    'password' => 'Clave',
                     'rol' => 'Rol',
                     'email' => 'Email',
             );

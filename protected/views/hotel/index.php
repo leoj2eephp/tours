@@ -2,13 +2,9 @@
 /* @var $this HotelController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Hotels',
-);
-
 $this->menu=array(
-	array('label'=>'Create Hotel', 'url'=>array('create')),
-	array('label'=>'Manage Hotel', 'url'=>array('admin')),
+	array('label'=>'Crear Hotel', 'url'=>array('create')),
+	array('label'=>'Administrar Hotel', 'url'=>array('admin')),
 );
 ?>
 

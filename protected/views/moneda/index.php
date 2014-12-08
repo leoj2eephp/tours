@@ -2,13 +2,10 @@
 /* @var $this MonedaController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Monedas',
-);
 
 $this->menu=array(
-	array('label'=>'Create Moneda', 'url'=>array('create')),
-	array('label'=>'Manage Moneda', 'url'=>array('admin')),
+	array('label'=>'Crear Moneda', 'url'=>array('create')),
+	array('label'=>'Administrar Moneda', 'url'=>array('admin')),
 );
 ?>
 

@@ -48,7 +48,6 @@
         'htmlOptions'=>array('enctype'=>'multipart/form-data'),
     )); ?>
 
-    <p class="note">Fields with <span class="required">*</span> are required.</p>
     <?php echo $form->errorSummary($model); ?>
 
     <div class="row">
@@ -171,7 +170,7 @@
     </table>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar'); ?>
     </div>
 
 <?php $this->endWidget(); ?>

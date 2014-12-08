@@ -8,7 +8,6 @@
 
     </div> <!-- /slider -->
     
-    
         
     <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl;?>/js/nivo-slider/jquery.nivo.slider.pack.js"></script>
     

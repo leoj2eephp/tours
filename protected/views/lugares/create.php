@@ -7,10 +7,10 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-    array('label'=>'Manage Lugares', 'url'=>array('admin')),
+    array('label'=>'Administrar Lugares', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Create Lugares</h1>
+<h1>Crear Lugares</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model,'lugars'=>$lugars,'tipoServicioList'=>$tipoServicioList,'modelTS'=>$modelTS));

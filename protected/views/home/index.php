@@ -9,7 +9,7 @@
             bottom: 0px;
             width: 6px;
             right: 0px;
-            background: url('/tours/themes/hebo/img/sombra.png') 100% 0px no-repeat;
+            background: url('<?php echo Yii::app()->baseUrl."/themes/".Yii::app()->theme->name;?>/img/sombra.png') 100% 0px no-repeat;
         }
         .slider-bootstrap:before {
             content: '';
@@ -18,7 +18,7 @@
             bottom: 0px;
             width: 164px;
             left: -5px;
-            background: url('/tours/themes/hebo/img/sombra.png') 0px 0px no-repeat;
+            background: url('<?php echo Yii::app()->baseUrl."/themes/".Yii::app()->theme->name;?>/img/sombra.png') 0px 0px no-repeat;
         }
         .navbar { display: none; }
         .container { display: none; }
@@ -74,7 +74,7 @@
             position: absolute;
             height: 48px;
             right: 0px;
-            background: url('/tours/themes/hebo/img/sombra.png') 96% 9px no-repeat;
+            background: url('<?php echo Yii::app()->baseUrl."/themes/".Yii::app()->theme->name;?>/img/sombra.png') 96% 9px no-repeat;
             top: 482px;
             bottom: -10px;
             left: 92px;
@@ -84,7 +84,7 @@
             position: relative;
             height: 25px;
             right: 10px;
-            background: url('/tours/themes/hebo/img/sombra.png') 5% 0px no-repeat;
+            background: url('<?php echo Yii::app()->baseUrl."/themes/".Yii::app()->theme->name;?>/img/sombra.png') 5% 0px no-repeat;
             width: 150px;
         }
         
@@ -156,6 +156,7 @@
             -webkit-box-shadow: 5px 5px 3px -1px rgba(120,120,120,1);
             -moz-box-shadow: 5px 5px 3px -1px rgba(120,120,120,1);
             box-shadow: 5px 5px 3px -1px rgba(120,120,120,1);
+            height:380px;
         }
         
     </style>
@@ -165,19 +166,19 @@
         $(document).ready(function() {
             
             $("#inicio").click(function(){
-                $("#contenido").load('home/inicio');
+                $("#contenido").load('<?php echo CController::createUrl('//home/inicio');?>');
             });
             $("#iniciarSesion").click(function(){
                 window.location = '/tours/index.php/site/login';
             });
             $("#sobreNosotros").click(function(){
-                $("#contenido").load('home/aboutUs');
+                $("#contenido").load('<?php echo CController::createUrl('//home/aboutUs');?>');
             });
             $("#panoramicas").click(function(){
-                $("#contenido").load('home/panoramicas');
+                $("#contenido").load('<?php echo CController::createUrl('//home/panoramicas');?>');
             });
             $(".tipoExcursion").click(function(){
-                $("#contenido").load('home/tipoExcursion?idTipoExcursion='+$(this).attr("id"));
+                $("#contenido").load('<?php echo CController::createUrl('//home/inicio');?>?idTipoExcursion='+$(this).attr("id"));
             });
             /*$("#halfDay").click(function(){
                 $("#contenido").load('home/halfDay');
@@ -194,7 +195,7 @@
                 pauseTime: 2500,
             });
             
-            $("#contenido").load('home/inicio');
+            $("#contenido").load('<?php echo CController::createUrl('//home/inicio');?>');
             
         });
     </script>

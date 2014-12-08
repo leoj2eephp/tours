@@ -2,18 +2,13 @@
 /* @var $this DetalleServicioController */
 /* @var $model DetalleServicio */
 
-$this->breadcrumbs=array(
-    $model->id=>array('view','id'=>$model->id),
-    'Update',
-);
-
 $this->menu=array(
-    array('label'=>'Create DetalleServicio', 'url'=>array('create')),
-    array('label'=>'View DetalleServicio', 'url'=>array('view', 'id'=>$model->id)),
-    array('label'=>'Manage DetalleServicio', 'url'=>array('admin')),
+    array('label'=>'Crear Detalle de Servicio', 'url'=>array('create')),
+    array('label'=>'Ver Detalle de Servicio', 'url'=>array('view', 'id'=>$model->id)),
+    array('label'=>'Administrar Detalle de Servicio', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Update DetalleServicio <?php echo $model->id; ?></h1>
+<h1>Actualizar Detalle de Servicio <?php echo $model->id; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

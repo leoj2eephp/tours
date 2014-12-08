@@ -2,18 +2,14 @@
 /* @var $this TipoExcursionController */
 /* @var $model TipoExcursion */
 
-$this->breadcrumbs=array(
-    $model->id=>array('view','id'=>$model->id),
-    'Update',
-);
 
 $this->menu=array(
-    array('label'=>'Create TipoExcursion', 'url'=>array('create')),
-    array('label'=>'View TipoExcursion', 'url'=>array('view', 'id'=>$model->id)),
-    array('label'=>'Manage TipoExcursion', 'url'=>array('admin')),
+    array('label'=>'Crear Tipo de Excursión', 'url'=>array('create')),
+    array('label'=>'Ver Tipo de Excursión', 'url'=>array('view', 'id'=>$model->id)),
+    array('label'=>'Administrar Tipo de Excursión', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Update TipoExcursion <?php echo $model->id; ?></h1>
+<h1>Actualizar Tipo de Excursión <?php echo $model->id; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

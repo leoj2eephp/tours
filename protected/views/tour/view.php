@@ -2,19 +2,15 @@
 /* @var $this TourController */
 /* @var $model Tour */
 
-$this->breadcrumbs=array(
-    $model->id,
-);
-
 $this->menu=array(
-    array('label'=>'Create Tour', 'url'=>array('create')),
-    array('label'=>'Update Tour', 'url'=>array('update', 'id'=>$model->id)),
-    array('label'=>'Delete Tour', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-    array('label'=>'Manage Tour', 'url'=>array('admin')),
+    array('label'=>'Crear Tour', 'url'=>array('create')),
+    array('label'=>'Actualizar Tour', 'url'=>array('update', 'id'=>$model->id)),
+    array('label'=>'Eliminar Tour', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'¿Seguro desea eliminar este registro?')),
+    array('label'=>'Administrar Tour', 'url'=>array('admin')),
 );
 ?>
 
-<h1>View Tour #<?php echo $model->id; ?></h1>
+<h1>Ver Tour #<?php echo $model->id; ?></h1>
 
 <?php
     $this->widget('zii.widgets.CDetailView', array(

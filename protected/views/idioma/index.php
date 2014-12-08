@@ -2,13 +2,9 @@
 /* @var $this IdiomaController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Idiomas',
-);
-
 $this->menu=array(
-	array('label'=>'Create Idioma', 'url'=>array('create')),
-	array('label'=>'Manage Idioma', 'url'=>array('admin')),
+	array('label'=>'Crear Idioma', 'url'=>array('create')),
+	array('label'=>'Administrar Idioma', 'url'=>array('admin')),
 );
 ?>
 

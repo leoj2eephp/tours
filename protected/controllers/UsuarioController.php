@@ -54,10 +54,12 @@ class UsuarioController extends Controller {
             $model->attributes=$_POST['Usuario'];
             $rol = ($model->rol == 1)?'ADMINISTRADOR':'AGENCIA';
             $model->rol = $rol;
-            $model->password = sha1($model->password);
+            $clave = substr(sha1(rand(1,1000)),0,6);
+            $model->password = sha1($clave);
             if($model->save()){
                 $auth= Yii::app()->authManager;
                 $auth->assign($rol,$model->id);
+                mail($model->email,"CREACIÓN DE USUARIO EN CIELO NORTE","Estimado\n\nSu registro en Tours de Cielo Norte se ha completado con éxito.\n Su nombre de usuario es ".$model->username." y su clave es ".$clave."\n\nMuchas gracias.");
                 $this->redirect(array('view','id'=>$model->id));
             }
         }
@@ -75,12 +77,10 @@ class UsuarioController extends Controller {
      */
     public function actionUpdate($id) {
         $model=$this->loadModel($id);
-        
         if(isset($_POST['Usuario'])) {
             $model->attributes=$_POST['Usuario'];
             $rol = ($model->rol == 1)?'ADMINISTRADOR':'AGENCIA';
             $model->rol = $rol;
-            $model->password = sha1($model->password);
             if($model->save()){
                 $auth= Yii::app()->authManager;
                 Authassignment::model()->deleteAllByAttributes(array('userid'=>$id));

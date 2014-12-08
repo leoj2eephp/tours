@@ -2,17 +2,14 @@
 /* @var $this PaisController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Paises',
-);
 
 $this->menu=array(
-	array('label'=>'Create Pais', 'url'=>array('create')),
-	array('label'=>'Manage Pais', 'url'=>array('admin')),
+	array('label'=>'Crear País', 'url'=>array('create')),
+	array('label'=>'Administrar País', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Paises</h1>
+<h1>Países</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

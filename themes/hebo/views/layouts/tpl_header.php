@@ -15,7 +15,7 @@
     ?>
     
     <!--<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>-->
-    <script src="<?php echo $baseUrl;?>/js/jquery-1.11.1.min"></script>
+    <!--<script src="<?php echo $baseUrl;?>/js/jquery-1.11.1.min"></script>-->
     <!-- the styles -->
     <link rel="stylesheet" type="text/css" href="<?php echo $baseUrl;?>/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $baseUrl;?>/css/bootstrap-responsive.min.css">
