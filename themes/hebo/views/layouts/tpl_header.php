@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Hebo! - Responsive HTML5 Theme</title>
+    <title><?php echo Yii::app()->name; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Simpson Moyo - Webapplicationthemes.com">
@@ -15,7 +15,7 @@
     ?>
     
     <!--<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>-->
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.js"></script>
+    <script src="<?php echo $baseUrl;?>/js/jquery-1.11.1.min"></script>
     <!-- the styles -->
     <link rel="stylesheet" type="text/css" href="<?php echo $baseUrl;?>/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $baseUrl;?>/css/bootstrap-responsive.min.css">
